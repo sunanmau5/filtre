@@ -1,7 +1,7 @@
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
+const HtmlPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -62,7 +62,7 @@ module.exports = {
 
 function getHtmlPlugins(chunks) {
   return chunks.map(chunk => new HtmlPlugin({
-    title: 'React Extension',
+    title: 'Filtre Extension',
     filename: `${chunk}.html`,
     chunks: [chunk],
   }))

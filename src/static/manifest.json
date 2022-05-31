@@ -1,6 +1,6 @@
 {
-  "name": "React Extension",
-  "description": "Chrome Extension in React!",
+  "name": "Filtre Extension",
+  "description": "Filtre Chrome Extension",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
@@ -10,18 +10,24 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "React Extension",
+    "default_title": "Filtre Extension",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "options_page": "options.html",
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["contentScript.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
     }
   ]
 }
