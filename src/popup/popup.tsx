@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Text } from 'rebass'
 import './popup.css'
 
-const App: React.FC<{}> = () => {
+const App: React.FC = () => {
   return (
     <div>
-      <img src="icon.png" />
+      <Text color={'white'}>Placeholder</Text>
     </div>
   )
 }
