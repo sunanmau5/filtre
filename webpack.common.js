@@ -8,18 +8,18 @@ module.exports = {
     popup: path.resolve('src/popup/popup.tsx'),
     options: path.resolve('src/options/options.tsx'),
     background: path.resolve('src/background/background.ts'),
-    contentScript: path.resolve('src/contentScript/contentScript.ts'),
+    contentScript: path.resolve('src/contentScript/content.ts')
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/,
@@ -29,41 +29,45 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    symlinks: false,
+    alias: {
+      '@components': path.resolve('src', 'components')
+    }
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,
+      cleanStaleWebpackAssets: false
     }),
     new CopyPlugin({
       patterns: [
         {
           from: path.resolve('src/static'),
-          to: path.resolve('dist'),
+          to: path.resolve('dist')
         }
       ]
     }),
     ...getHtmlPlugins([
       'popup',
       'options'
-    ]),
+    ])
   ],
   output: {
     filename: '[name].js',
-    path: path.resolve('dist'),
+    path: path.resolve('dist')
   },
   optimization: {
     splitChunks: {
-      chunks(chunk) {
+      chunks (chunk) {
         return chunk.name !== 'contentScript' && chunk.name !== 'background'
       }
-    },
+    }
   }
 }
 
-function getHtmlPlugins(chunks) {
+function getHtmlPlugins (chunks) {
   return chunks.map(chunk => new HtmlPlugin({
     title: 'Filtre Extension',
     filename: `${chunk}.html`,
-    chunks: [chunk],
+    chunks: [chunk]
   }))
 }

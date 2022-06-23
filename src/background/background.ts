@@ -1,52 +1,37 @@
-// TODO: background script
-chrome.runtime.onInstalled.addListener(() => {
-  // TODO: on installed function
-})
+import { getCurrentTab, groupParamsByKey } from "./utils"
 
-const groupParamsByKey = (params: URLSearchParams) => [...params.entries()].reduce((acc, tuple) => {
-  const [key, val] = tuple
+const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version
 
-  if (acc.hasOwnProperty(key)) {
-    if (Array.isArray(acc[key])) {
-      acc[key] = [...acc[key], val]
-    } else {
-      acc[key] = [acc[key], val]
-    }
-  } else {
-    acc[key] = val
-  }
+const upsert = (url: string, params: Record<string, any>) => {
+  chrome.storage.local.get({ filters: {} }, res => {
+    const filters = res.filters
 
-  return acc
-}, {})
+    if (!filters[url]) filters[url] = []
 
+    filters[url].push({
+      version: STORE_FORMAT_VERSION,
+      uuid: crypto.randomUUID(),
+      createdAt: Date.now(),
+      params
+    })
 
-const upsert = (origin: string, pathname: string, params: Record<string, any>) => {
-  //
-  //
-  chrome.storage.sync.get([origin], res => {
-    const obj = { pathname, params }
-    const newArray = !!res[origin] ? [...res[origin], obj] : [obj]
-    chrome.storage.sync.set({ [origin]: newArray })
+    console.log({ filters })
+    chrome.storage.local.set({ filters })
   })
 }
 
-chrome.tabs.onUpdated.addListener((_, changeInfo, tab) => {
-  //
-  //
+chrome.tabs.onUpdated.addListener(async (_, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.active) {
-    //
-    //
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      const { origin, pathname, search } = new URL(tabs[0].url)
+    const currentTab = await getCurrentTab()
+    if (currentTab.url) {
+      const { hostname, pathname, search } = new URL(currentTab.url)
       const params = new URLSearchParams(search)
-
       const groupedParams = groupParamsByKey(params)
-
       if (!!params.toString()) {
-        upsert(origin, pathname, groupedParams)
+        upsert(hostname + pathname, groupedParams)
       } else {
         console.log('no params provided')
       }
-    })
+    }
   }
 })
