@@ -8,7 +8,7 @@ module.exports = {
     popup: path.resolve('src/popup/popup.tsx'),
     options: path.resolve('src/options/options.tsx'),
     background: path.resolve('src/background/background.ts'),
-    contentScript: path.resolve('src/contentScript/content.ts')
+    contentScript: path.resolve('src/contentScript/contentScript.ts')
   },
   module: {
     rules: [
@@ -57,14 +57,14 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks (chunk) {
+      chunks(chunk) {
         return chunk.name !== 'contentScript' && chunk.name !== 'background'
       }
     }
   }
 }
 
-function getHtmlPlugins (chunks) {
+function getHtmlPlugins(chunks) {
   return chunks.map(chunk => new HtmlPlugin({
     title: 'Filtre Extension',
     filename: `${chunk}.html`,

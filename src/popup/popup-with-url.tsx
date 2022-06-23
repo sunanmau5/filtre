@@ -1,5 +1,5 @@
 import { BasicCard } from '@components/BasicCard'
-import { BasicCardContent } from '@components/BasicCard/content'
+import { BasicCardContent } from '@components/BasicCard/card-content'
 import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import React, { useEffect, useState } from 'react'
 import { Options } from './options'
