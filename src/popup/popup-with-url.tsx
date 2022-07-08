@@ -5,13 +5,16 @@ import React, { useEffect, useState } from 'react'
 import { Options } from './options'
 import { Entries } from './types'
 
-interface Props { url: string }
+interface Props {
+  url: string
+}
 
-export const PopupWithUrl: React.FC<Props> = ({ url }) => {
+export const PopupWithUrl: React.FC<Props> = (props) => {
+  const { url } = props
   const [entries, setEntries] = useState<Entries | null>(null)
 
   const fetchParams = () => {
-    chrome.storage.local.get({ filters: {} }, res => {
+    chrome.storage.local.get({ filters: {} }, (res) => {
       const filters = res.filters
       if (!filters[url]) setEntries(null)
       else setEntries(filters[url])

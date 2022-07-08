@@ -1,18 +1,41 @@
-import { getCurrentTab, groupParamsByKey } from "./utils"
+import { Entries } from './types'
+import { getCurrentTab, groupParamsByKey } from './utils'
 
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version
 
 const upsert = (url: string, params: Record<string, any>) => {
-  chrome.storage.local.get({ filters: {} }, res => {
-    const filters = res.filters
+  chrome.storage.local.get({ filters: {} }, (res) => {
+    const filters: Record<string, Entries> = res.filters
 
-    if (!filters[url]) filters[url] = []
+    if (!filters[url]) {
+      filters[url] = []
+    }
 
-    filters[url].push({
-      version: STORE_FORMAT_VERSION,
-      uuid: crypto.randomUUID(),
-      createdAt: Date.now(),
-      params
+    console.log({ params })
+
+    Object.entries(params).map(([key, value]) => {
+      const idx = filters[url].findIndex(
+        (obj) => obj.paramKey === key && obj.paramValue === value
+      )
+
+      if (idx > -1) {
+        filters[url][idx] = {
+          ...filters[url][idx],
+          version: STORE_FORMAT_VERSION,
+          count: filters[url][idx].count + 1,
+          lastUpdatedAt: Date.now()
+        }
+      } else {
+        filters[url].push({
+          uuid: crypto.randomUUID(),
+          createdAt: Date.now(),
+          version: STORE_FORMAT_VERSION,
+          paramKey: key,
+          paramValue: value,
+          count: 1,
+          lastUpdatedAt: Date.now()
+        })
+      }
     })
 
     console.log({ filters })
