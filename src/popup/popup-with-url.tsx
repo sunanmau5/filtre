@@ -3,17 +3,13 @@ import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { BasicCardTitle } from '@components/BasicCard/title'
 import React, { useEffect, useState } from 'react'
 import { Box } from 'rebass'
-import { Entries } from 'src/types/entry-type'
-import { getStoredFilters } from 'src/utils/storage'
+import { UrlType } from 'src/utils/url-context'
+import { Entries } from '../types/entry-type'
+import { getStoredFilters } from '../utils/storage'
 import { PopupEntries } from './entries'
 import { PopupNoEntries } from './popup-no-entries'
 
-interface Props {
-  hostname: string
-  pathname: string
-}
-
-export const PopupWithUrl: React.FC<Props> = (props) => {
+export const PopupWithUrl: React.FC<UrlType> = (props) => {
   const { hostname, pathname } = props
   const url = hostname + pathname
   const [entries, setEntries] = useState<Entries | null>(null)

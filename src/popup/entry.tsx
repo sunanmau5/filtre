@@ -1,7 +1,8 @@
 import { formatDistance } from 'date-fns'
 import React from 'react'
 import { Flex } from 'rebass'
-import { Entry } from 'src/types/entry-type'
+import { Entry } from '../types/entry-type'
+import { useParamContext } from '../utils/param-context'
 import { Param } from './param'
 
 type Props = Entry & {
@@ -10,9 +11,13 @@ type Props = Entry & {
 
 export const PopupEntry: React.FC<Props> = (props) => {
   const { lastUpdatedAt, paramKey, paramValue, count, index } = props
+  const { setSearchParams } = useParamContext()
 
   const handleClick = () => {
-    //TODO: navigate window to website with chosen param on click
+    setSearchParams((prev) => ({
+      ...prev,
+      [paramKey]: paramValue
+    }))
   }
 
   return (

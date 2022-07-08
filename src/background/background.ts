@@ -1,5 +1,6 @@
-import { setStoredFilters, upsertFilter } from 'src/utils/storage'
-import { getCurrentTab, groupParamsByKey } from './utils'
+import { setStoredFilters, upsertFilter } from '../utils/storage'
+import { getCurrentTab } from '../utils/tabs'
+import { groupParamsByKey } from './utils'
 
 chrome.tabs.onUpdated.addListener(async (_, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.active) {
@@ -10,8 +11,6 @@ chrome.tabs.onUpdated.addListener(async (_, changeInfo, tab) => {
       const groupedParams = groupParamsByKey(params)
       if (!!params.toString()) {
         upsertFilter(hostname + pathname, groupedParams)
-      } else {
-        console.log('no params provided')
       }
     }
   }

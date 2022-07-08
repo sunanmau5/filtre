@@ -1,10 +1,4 @@
-async function getCurrentTab() {
-  const queryOptions = { active: true, lastFocusedWindow: true }
-  const [tab] = await chrome.tabs.query(queryOptions)
-  return tab
-}
-
-function groupParamsByKey(params: URLSearchParams) {
+export const groupParamsByKey = (params: URLSearchParams) => {
   return [...params.entries()].reduce((acc, tuple) => {
     const [key, val] = tuple
 
@@ -21,5 +15,3 @@ function groupParamsByKey(params: URLSearchParams) {
     return acc
   }, {} as Record<string, string | string[]>)
 }
-
-export { getCurrentTab, groupParamsByKey }
