@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { getCurrentTab } from 'src/background/utils'
 import { PopupWithUrl } from './popup-with-url'
 import './popup.css'
 
 const App: React.FC = () => {
-  const [url, setUrl] = useState<string | null>(null)
+  const [hostname, setHostname] = useState<string | null>(null)
+  const [pathname, setPathname] = useState<string | null>(null)
 
   const fetchUrl = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      if (tabs[0].url) {
-        const { hostname, pathname } = new URL(tabs[0].url)
-        setUrl(hostname + pathname)
+    getCurrentTab().then((result) => {
+      if (result.url) {
+        const { hostname, pathname } = new URL(result.url)
+        setHostname(hostname)
+        setPathname(pathname)
       }
     })
   }
 
-  useEffect(() => fetchUrl(), [])
+  useEffect(fetchUrl, [])
 
-  if (!url) {
+  if (!hostname || !pathname) {
     return null
   }
 
-  return <PopupWithUrl url={url} />
+  return <PopupWithUrl hostname={hostname} pathname={pathname} />
 }
 
 const root = document.createElement('div')

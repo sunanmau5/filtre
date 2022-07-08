@@ -6,9 +6,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   entry: {
     popup: path.resolve('src/popup/popup.tsx'),
-    options: path.resolve('src/options/options.tsx'),
     background: path.resolve('src/background/background.ts'),
-    contentScript: path.resolve('src/contentScript/contentScript.ts')
+    contentScript: path.resolve('src/content-script/content-script.ts')
   },
   module: {
     rules: [
@@ -46,10 +45,7 @@ module.exports = {
         }
       ]
     }),
-    ...getHtmlPlugins([
-      'popup',
-      'options'
-    ])
+    ...getHtmlPlugins(['popup'])
   ],
   output: {
     filename: '[name].js',
@@ -58,16 +54,19 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks(chunk) {
-        return chunk.name !== 'contentScript' && chunk.name !== 'background'
+        return chunk.name !== 'content-script' && chunk.name !== 'background'
       }
     }
   }
 }
 
 function getHtmlPlugins(chunks) {
-  return chunks.map(chunk => new HtmlPlugin({
-    title: 'Filtre Extension',
-    filename: `${chunk}.html`,
-    chunks: [chunk]
-  }))
+  return chunks.map(
+    (chunk) =>
+      new HtmlPlugin({
+        title: 'Filtre Extension',
+        filename: `${chunk}.html`,
+        chunks: [chunk]
+      })
+  )
 }

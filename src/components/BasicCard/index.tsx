@@ -20,11 +20,10 @@ export const BasicCard: ForwardRefExoticComponent<
   return (
     <Card
       ref={ref}
-      backgroundColor="white"
-      p={4}
       width={1}
       sx={{
-        minWidth: 300,
+        bg: 'white',
+        minWidth: 350,
         borderWidth: 1,
         borderRadius: 2,
         boxShadow:

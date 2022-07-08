@@ -1,20 +1,19 @@
-import React, { HTMLAttributes } from 'react'
-import { Heading } from 'rebass'
+import React from 'react'
+import { Heading, HeadingProps } from 'rebass'
 
 /**
- * 
- * @see {@link HTMLAttributes} for available properties
- * @returns 
+ *
+ * @see {@link HeadingProps} for available properties
+ * @returns
  */
-export const BasicCardTitle: React.FC<HTMLAttributes<HTMLHeadingElement>> = (props) => {
+export const BasicCardTitle: React.FC<HeadingProps> = (props) => {
   return (
     <Heading
       {...props}
-      as='h3'
+      as="h3"
       my={0}
-      color='black'
       fontWeight={600}
-    >
+      fontFamily="Poppins, sans-serif">
       {props.children}
     </Heading>
   )
