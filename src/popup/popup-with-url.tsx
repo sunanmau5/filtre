@@ -1,30 +1,30 @@
 import { BasicCard } from '@components/BasicCard'
-import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { BasicCardTitle } from '@components/BasicCard/title'
 import React, { useEffect, useState } from 'react'
+import { Router } from 'react-chrome-extension-router'
 import { Box } from 'rebass'
-import { UrlType } from 'src/utils/url-context'
-import { Entries } from '../types/entry-type'
+import { Entries } from 'src/types/entry-type'
 import { getStoredFilters } from '../utils/storage'
+import { UrlType } from '../utils/url-context'
 import { PopupEntries } from './entries'
+import { NavigateAction } from './navigate-action'
 import { PopupNoEntries } from './popup-no-entries'
 
 export const PopupWithUrl: React.FC<UrlType> = (props) => {
   const { hostname, pathname } = props
-  const url = hostname + pathname
-  const [entries, setEntries] = useState<Entries | null>(null)
+  const [entries, setEntries] = useState<Record<string, Entries> | null>(null)
 
   const fetchParams = () => {
     getStoredFilters().then((filters) => {
-      if (!filters[url]) {
-        setEntries(null)
+      if (filters[hostname]) {
+        setEntries(filters[hostname])
       } else {
-        setEntries(filters[url])
+        setEntries(null)
       }
     })
   }
 
-  useEffect(fetchParams, [url])
+  useEffect(fetchParams, [hostname, pathname])
 
   return (
     <BasicCard>
@@ -32,12 +32,20 @@ export const PopupWithUrl: React.FC<UrlType> = (props) => {
         p={3}
         sx={{
           borderBottom: '1px solid rgb(209, 213, 219)',
-          backgroundColor: 'white'
+          bg: 'white'
         }}>
         <BasicCardTitle>{hostname}</BasicCardTitle>
-        <BasicCardSubtitle>{url}</BasicCardSubtitle>
       </Box>
-      {entries ? <PopupEntries entries={entries} /> : <PopupNoEntries />}
+
+      {entries ? (
+        <Router>
+          <PopupEntries entries={entries} />
+        </Router>
+      ) : (
+        <PopupNoEntries />
+      )}
+
+      <NavigateAction />
     </BasicCard>
   )
 }

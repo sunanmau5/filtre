@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { ParamContext } from '../utils/param-context'
+import { PathnameContext } from '../utils/pathname-context'
 import { getCurrentTab } from '../utils/tabs'
 import { UrlContext, UrlType } from '../utils/url-context'
 import { PopupWithUrl } from './popup-with-url'
@@ -13,6 +14,7 @@ const App: React.FC = () => {
     pathname: ''
   })
   const [searchParams, setSearchParams] = useState<Record<string, string>>({})
+  const [pathname, setPathname] = useState<string>('')
 
   const fetchUrl = () => {
     getCurrentTab().then((result) => {
@@ -31,9 +33,11 @@ const App: React.FC = () => {
 
   return (
     <UrlContext.Provider value={{ url, setUrl }}>
-      <ParamContext.Provider value={{ searchParams, setSearchParams }}>
-        <PopupWithUrl {...url} />
-      </ParamContext.Provider>
+      <PathnameContext.Provider value={{ pathname, setPathname }}>
+        <ParamContext.Provider value={{ searchParams, setSearchParams }}>
+          <PopupWithUrl {...url} />
+        </ParamContext.Provider>
+      </PathnameContext.Provider>
     </UrlContext.Provider>
   )
 }

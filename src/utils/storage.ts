@@ -1,7 +1,7 @@
-import { Entries } from 'src/types/entry-type'
+import { Entries } from '../types/entry-type'
 
 export interface LocalStorage {
-  filters?: Record<string, Entries>
+  filters?: Record<string, Record<string, Entries>>
 }
 
 export type LocalStorageKeys = keyof LocalStorage
@@ -9,15 +9,17 @@ export type LocalStorageKeys = keyof LocalStorage
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version
 
 export const setStoredFilters = (
-  filters: Record<string, Entries>
+  filters: Record<string, Record<string, Entries>>
 ): Promise<void> => {
   const vals: LocalStorage = { filters }
   return new Promise((resolve) => {
-    chrome.storage.local.set(vals, () => resolve())
+    chrome.storage.local.set(vals, resolve)
   })
 }
 
-export const getStoredFilters = (): Promise<Record<string, Entries>> => {
+export const getStoredFilters = (): Promise<
+  Record<string, Record<string, Entries>>
+> => {
   const keys: LocalStorageKeys[] = ['filters']
   return new Promise((resolve) => {
     chrome.storage.local.get(keys, (res: LocalStorage) => {
@@ -26,26 +28,32 @@ export const getStoredFilters = (): Promise<Record<string, Entries>> => {
   })
 }
 
-export const upsertFilter = (url: string, params: Record<string, any>) => {
+export const upsertFilter = (
+  hostname: string,
+  pathname: string,
+  params: Record<string, any>
+) => {
   getStoredFilters().then((filters) => {
-    if (!filters[url]) {
-      filters[url] = []
+    if (!filters[hostname]) {
+      filters[hostname] = {}
     }
-
+    if (!filters[hostname][pathname]) {
+      filters[hostname][pathname] = []
+    }
     Object.entries(params).map(([key, value]) => {
-      const idx = filters[url].findIndex(
+      const idx = (filters[hostname][pathname] || [])?.findIndex(
         (obj) => obj.paramKey === key && obj.paramValue === value
       )
 
       if (idx > -1) {
-        filters[url][idx] = {
-          ...filters[url][idx],
+        filters[hostname][pathname][idx] = {
+          ...filters[hostname][pathname][idx],
           version: STORE_FORMAT_VERSION,
-          count: filters[url][idx].count + 1,
+          count: filters[hostname][pathname][idx].count + 1,
           lastUpdatedAt: Date.now()
         }
       } else {
-        filters[url].push({
+        filters[hostname][pathname].push({
           uuid: crypto.randomUUID(),
           createdAt: Date.now(),
           version: STORE_FORMAT_VERSION,

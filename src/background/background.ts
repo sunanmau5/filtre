@@ -10,7 +10,7 @@ chrome.tabs.onUpdated.addListener(async (_, changeInfo, tab) => {
       const params = new URLSearchParams(search)
       const groupedParams = groupParamsByKey(params)
       if (!!params.toString()) {
-        upsertFilter(hostname + pathname, groupedParams)
+        upsertFilter(hostname, pathname, groupedParams)
       }
     }
   }
