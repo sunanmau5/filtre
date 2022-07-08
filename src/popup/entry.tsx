@@ -1,15 +1,15 @@
 import { formatDistance } from 'date-fns'
 import React from 'react'
 import { Flex } from 'rebass'
-import { Param } from './param'
 import { Entry } from 'src/types/entry-type'
+import { Param } from './param'
 
 type Props = Entry & {
   index: number
 }
 
 export const PopupEntry: React.FC<Props> = (props) => {
-  const { lastUpdatedAt, uuid, paramKey, paramValue, count, index } = props
+  const { lastUpdatedAt, paramKey, paramValue, count, index } = props
 
   const handleClick = () => {
     //TODO: navigate window to website with chosen param on click
@@ -29,7 +29,7 @@ export const PopupEntry: React.FC<Props> = (props) => {
         ':hover': { backgroundColor: 'rgb(219, 234, 254)' },
         ':active': { backgroundColor: 'rgb(191, 219, 254)' }
       }}>
-      <Flex key={uuid} sx={{ flexDirection: 'column', gap: 2 }}>
+      <Flex sx={{ flexDirection: 'column', gap: 2 }}>
         <Param paramKey={paramKey} value={paramValue} />
         <span>{formatDistance(lastUpdatedAt, new Date())}</span>
       </Flex>
