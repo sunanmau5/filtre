@@ -17,7 +17,7 @@ export const PopupEntryNode: React.FC<Props> = (props) => {
   const { setPathname } = usePathnameContext()
 
   const handleClick = () => {
-    setPathname(nodeKey)
+    setPathname((prev) => `${prev}/${nodeKey}`)
     goTo(PopupEntries, { entries: entries[nodeKey] })
   }
 

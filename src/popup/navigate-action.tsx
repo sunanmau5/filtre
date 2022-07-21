@@ -43,6 +43,7 @@ export const NavigateAction: React.FC = () => {
           ':disabled': { bg: 'rgb(243, 244, 246)' }
         }}
         value={url.hostname + pathname + localParams}
+        title={url.hostname + pathname + localParams}
         disabled
       />
       <Button

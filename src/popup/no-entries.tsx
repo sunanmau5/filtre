@@ -1,7 +1,13 @@
 import React from 'react'
 import { Flex, Text } from 'rebass'
 
-export const PopupNoEntries: React.FC = () => {
+interface Props {
+  text: string
+}
+
+export const NoEntries: React.FC<Props> = (props) => {
+  const { text } = props
+
   return (
     <Flex
       alignItems="center"
@@ -9,9 +15,10 @@ export const PopupNoEntries: React.FC = () => {
       textAlign="center"
       sx={{
         px: 3,
-        py: 4
+        py: 4,
+        bg: 'rgb(243, 244, 246)'
       }}>
-      <Text>You currently have no entries available for this website.</Text>
+      <Text>{text}</Text>
     </Flex>
   )
 }

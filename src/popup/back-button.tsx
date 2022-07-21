@@ -8,7 +8,7 @@ export const BackButton: React.FC = () => {
   const { pathname, setPathname } = usePathnameContext()
 
   const handleClick = () => {
-    setPathname('')
+    setPathname((prev) => prev.substring(0, prev.lastIndexOf('/')))
     goBack()
   }
 
@@ -25,7 +25,8 @@ export const BackButton: React.FC = () => {
         gap: 2,
         alignItems: 'center',
         cursor: 'pointer',
-        ':hover': { bg: 'rgb(219, 234, 254)' }
+        ':hover': { bg: 'rgb(219, 234, 254)' },
+        borderBottom: '1px solid rgb(209, 213, 219)'
       }}>
       <ArrowLeft size={16} />
       <Text fontSize={14} sx={{ textDecoration: 'underline' }}>

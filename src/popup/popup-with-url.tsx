@@ -8,7 +8,7 @@ import { getStoredFilters } from '../utils/storage'
 import { UrlType } from '../utils/url-context'
 import { PopupEntries } from './entries'
 import { NavigateAction } from './navigate-action'
-import { PopupNoEntries } from './popup-no-entries'
+import { NoEntries } from './no-entries'
 
 export const PopupWithUrl: React.FC<UrlType> = (props) => {
   const { hostname, pathname } = props
@@ -42,7 +42,7 @@ export const PopupWithUrl: React.FC<UrlType> = (props) => {
           <PopupEntries entries={entries} />
         </Router>
       ) : (
-        <PopupNoEntries />
+        <NoEntries text="You currently have no entries available for this website." />
       )}
 
       <NavigateAction />

@@ -1,7 +1,7 @@
 import { Entries } from '../types/entry-type'
 
 export interface LocalStorage {
-  filters?: Record<string, Record<string, Entries>>
+  filters?: Record<string, any>
 }
 
 export type LocalStorageKeys = keyof LocalStorage
@@ -9,7 +9,7 @@ export type LocalStorageKeys = keyof LocalStorage
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version
 
 export const setStoredFilters = (
-  filters: Record<string, Record<string, Entries>>
+  filters: Record<string, any>
 ): Promise<void> => {
   const vals: LocalStorage = { filters }
   return new Promise((resolve) => {
@@ -17,9 +17,7 @@ export const setStoredFilters = (
   })
 }
 
-export const getStoredFilters = (): Promise<
-  Record<string, Record<string, Entries>>
-> => {
+export const getStoredFilters = (): Promise<Record<string, any>> => {
   const keys: LocalStorageKeys[] = ['filters']
   return new Promise((resolve) => {
     chrome.storage.local.get(keys, (res: LocalStorage) => {
@@ -62,16 +60,16 @@ const pathnameToJsonRecursive = (
   arr: string[],
   params: Record<string, any>
 ): Record<string, any> | undefined => {
+  // Get the first element of array
   const elem = arr.shift()
 
   // Exit condition
   if (!elem) return
 
-  // If JSON key exists, use the existing object,
-  // otherwise an empty object is created
-  if (!json[elem]) {
-    const entries = upsertParams(json[elem], params)
-    json[elem] = arr.length === 0 ? entries : {}
+  // If JSON key exists, use the existing object, otherwise an empty object
+  // is created. Or upserting param count if json[elem] is an array.
+  if (!json[elem] || (Array.isArray(json[elem]) && json[elem].length > 0)) {
+    json[elem] = arr.length === 0 ? upsertParams(json[elem], params) : {}
   }
 
   return pathnameToJsonRecursive(json[elem], arr, params)
