@@ -40,7 +40,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve('src/static'),
+          from: path.resolve('static'),
           to: path.resolve('dist')
         }
       ]

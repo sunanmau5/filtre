@@ -1,5 +1,7 @@
 # Filtre Extension
 
+A browing assistant for Chrome.
+
 ## TODO
 
 ## Getting Started

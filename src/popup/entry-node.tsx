@@ -23,7 +23,7 @@ export const PopupEntryNode: React.FC<Props> = (props) => {
 
   return (
     <EntryWrapper index={index} onClick={handleClick}>
-      <Text fontSize={14}>{nodeKey}</Text>
+      <Text fontSize={14}>{decodeURIComponent(nodeKey)}</Text>
       <ChevronRight />
     </EntryWrapper>
   )
