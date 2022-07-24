@@ -6,7 +6,7 @@ export interface LocalStorage {
 
 export type LocalStorageKeys = keyof LocalStorage
 
-const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version
+const STORE_FORMAT_VERSION = chrome.runtime.getManifest()?.version ?? '1.0.0'
 
 export const setStoredFilters = (
   filters: Record<string, any>
