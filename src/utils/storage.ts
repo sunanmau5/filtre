@@ -68,7 +68,7 @@ const pathnameToJsonRecursive = (
 
   // If JSON key exists, use the existing object, otherwise an empty object
   // is created. Or upserting param count if json[elem] is an array.
-  if (!json[elem] || (Array.isArray(json[elem]) && json[elem].length > 0)) {
+  if (!json[elem] || (Array.isArray(json[elem]) && json[elem].length >= 0)) {
     json[elem] = arr.length === 0 ? upsertParams(json[elem], params) : {}
   }
 

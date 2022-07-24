@@ -9,6 +9,8 @@ interface Props {
 export const Param: React.FC<Props> = (props) => {
   const { paramKey, value } = props
 
+  const decodedValue = decodeURIComponent(value)
+
   return (
     <Flex flexDirection="column" maxWidth={250}>
       <Heading
@@ -27,8 +29,8 @@ export const Param: React.FC<Props> = (props) => {
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap'
         }}
-        title={value}>
-        {value}
+        title={decodedValue}>
+        {decodedValue}
       </Text>
     </Flex>
   )
