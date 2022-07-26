@@ -1,6 +1,6 @@
 import React from 'react'
 import { Flex } from 'rebass'
-import { Entries } from 'src/types/entry-type'
+import { Entries } from '../types/entry-type'
 import { BackButton } from './back-button'
 import { PopupEntryLeaf } from './entry-leaf'
 import { PopupEntryNode } from './entry-node'
