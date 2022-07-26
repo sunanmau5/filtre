@@ -1,4 +1,5 @@
 import { Entries } from '../types/entry-type'
+import { groupParamsByKey } from './url-util'
 
 export interface LocalStorage {
   filters?: Record<string, any>
@@ -75,17 +76,17 @@ const pathnameToJsonRecursive = (
   return pathnameToJsonRecursive(json[elem], arr, params)
 }
 
-export const upsertFilter = (
-  hostname: string,
-  pathname: string,
-  params: Record<string, any>
-) => {
+export const upsertFilter = (url: string) => {
+  const { hostname, pathname, search } = new URL(url)
+  const params = new URLSearchParams(search)
+  const groupedParams = groupParamsByKey(params)
+
   const subdir = pathname.split('/').filter((v) => !!v)
   getStoredFilters().then((filters) => {
     if (!filters[hostname]) {
       filters[hostname] = {}
     }
-    pathnameToJsonRecursive(filters[hostname], subdir, params)
+    pathnameToJsonRecursive(filters[hostname], subdir, groupedParams)
     setStoredFilters(filters)
   })
 }

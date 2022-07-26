@@ -1,9 +1,7 @@
 import * as chrome from 'sinon-chrome'
 
 describe('background', () => {
-  afterEach(() => {
-    chrome.flush()
-  })
+  afterEach(chrome.flush)
 
   it('should add listener on install', () => {
     expect(chrome.runtime.onInstalled.addListener.notCalled).toBe(true)

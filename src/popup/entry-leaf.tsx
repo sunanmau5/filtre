@@ -1,8 +1,8 @@
 import { formatDistance } from 'date-fns'
 import React from 'react'
 import { Flex } from 'rebass'
+import { useParamContext } from '../contexts/param-context'
 import { Entry } from '../types/entry-type'
-import { useParamContext } from '../utils/param-context'
 import { EntryWrapper } from './entry-wrapper'
 import { Param } from './param'
 

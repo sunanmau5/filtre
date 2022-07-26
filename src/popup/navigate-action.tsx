@@ -2,10 +2,10 @@ import { Input } from '@rebass/forms'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Button, Flex } from 'rebass'
-import { useParamContext } from '../utils/param-context'
-import { usePathnameContext } from '../utils/pathname-context'
+import { useParamContext } from '../contexts/param-context'
+import { usePathnameContext } from '../contexts/pathname-context'
+import { useUrlContext } from '../contexts/url-context'
 import { navigateToUrl } from '../utils/tabs'
-import { useUrlContext } from '../utils/url-context'
 
 export const NavigateAction: React.FC = () => {
   const [localParams, setLocalParams] = useState<string>('')

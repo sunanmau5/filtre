@@ -2,7 +2,7 @@ import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Text } from 'rebass'
-import { usePathnameContext } from '../utils/pathname-context'
+import { usePathnameContext } from '../contexts/pathname-context'
 import { PopupEntries } from './entries'
 import { EntryWrapper } from './entry-wrapper'
 

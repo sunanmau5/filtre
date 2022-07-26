@@ -1,3 +1,3 @@
-// TODO: content script
+import { upsertFilter } from '../utils/storage'
 
-export {}
+upsertFilter(document.location.href)

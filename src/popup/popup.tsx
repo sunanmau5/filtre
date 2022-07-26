@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { ParamContext } from '../utils/param-context'
-import { PathnameContext } from '../utils/pathname-context'
+import { ParamContext } from '../contexts/param-context'
+import { PathnameContext } from '../contexts/pathname-context'
+import { UrlContext, UrlType } from '../contexts/url-context'
 import { getCurrentTab } from '../utils/tabs'
-import { UrlContext, UrlType } from '../utils/url-context'
 import { PopupWithUrl } from './popup-with-url'
 import './popup.css'
 
