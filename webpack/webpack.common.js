@@ -30,7 +30,9 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
     symlinks: false,
     alias: {
-      '@components': path.resolve('src', 'components')
+      '@components': path.resolve('src', 'components'),
+      '@contexts': path.resolve('src', 'contexts'),
+      '@types': path.resolve('src', 'types')
     }
   },
   plugins: [

@@ -1,33 +1,33 @@
-import { Input } from '@rebass/forms'
+import { NavigateButton } from '@components/Button/navigate'
+import { InputField } from '@components/InputField'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { Button, Flex } from 'rebass'
-import { useParamContext } from '../contexts/param-context'
-import { usePathnameContext } from '../contexts/pathname-context'
-import { useUrlContext } from '../contexts/url-context'
-import { navigateToUrl } from '../utils/tabs'
+import { Flex } from 'rebass'
+import { useParameterContext } from '../contexts/parameter'
+import { usePathnameContext } from '../contexts/pathname'
+import { useUrlContext } from '../contexts/url'
 
 export const NavigateAction: React.FC = () => {
   const [localParams, setLocalParams] = useState<string>('')
 
   const { url } = useUrlContext()
-  const { searchParams } = useParamContext()
+  const { searchParameters } = useParameterContext()
   const { pathname } = usePathnameContext()
 
   useEffect(() => {
-    if (!isEmpty(searchParams)) {
+    if (!isEmpty(searchParameters)) {
       let str = '?'
-      Object.entries(searchParams).map(([key, value], i) => {
+      Object.entries(searchParameters).map(([key, value], i) => {
         str = str.concat(
           key,
           '=',
           encodeURIComponent(value),
-          i !== Object.keys(searchParams).length - 1 ? '&' : ''
+          i !== Object.keys(searchParameters).length - 1 ? '&' : ''
         )
       })
       setLocalParams(str)
     }
-  }, [searchParams])
+  }, [searchParameters])
 
   return (
     <Flex
@@ -36,30 +36,12 @@ export const NavigateAction: React.FC = () => {
         gap: 3,
         borderTop: '1px solid rgb(209, 213, 219)'
       }}>
-      <Input
-        sx={{
-          cursor: 'text',
-          borderColor: 'rgb(209, 213, 219)',
-          ':disabled': { bg: 'rgb(243, 244, 246)' }
-        }}
+      <InputField
         value={url.hostname + pathname + localParams}
         title={url.hostname + pathname + localParams}
         disabled
       />
-      <Button
-        sx={{
-          minWidth: 75,
-          py: 1,
-          px: 2,
-          cursor: 'pointer',
-          borderRadius: 0,
-          bg: 'rgb(96, 165, 250)',
-          ':hover': { bg: 'rgb(59, 130, 246)' },
-          ':active': { bg: 'rgb(37, 99, 235)' }
-        }}
-        onClick={() => navigateToUrl(url.origin + pathname + localParams)}>
-        Navigate
-      </Button>
+      <NavigateButton url={url.origin + pathname + localParams} />
     </Flex>
   )
 }

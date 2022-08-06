@@ -1,10 +1,10 @@
+import { EntryList } from '@components/EntryList'
+import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Text } from 'rebass'
-import { usePathnameContext } from '../contexts/pathname-context'
-import { PopupEntries } from './entries'
-import { EntryWrapper } from './entry-wrapper'
+import { EntryWrapper } from './wrapper'
 
 interface Props {
   index: number
@@ -12,13 +12,13 @@ interface Props {
   entries: any
 }
 
-export const PopupEntryNode: React.FC<Props> = (props) => {
+export const EntryNode: React.FC<Props> = (props) => {
   const { index, nodeKey, entries } = props
   const { setPathname } = usePathnameContext()
 
   const handleClick = () => {
     setPathname((prev) => `${prev}/${nodeKey}`)
-    goTo(PopupEntries, { entries: entries[nodeKey] })
+    goTo(EntryList, { entries: entries[nodeKey] })
   }
 
   return (

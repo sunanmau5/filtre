@@ -1,16 +1,16 @@
 import React from 'react'
 import { Flex } from 'rebass'
-import { Entries } from '../types/entry-type'
-import { BackButton } from './back-button'
-import { PopupEntryLeaf } from './entry-leaf'
-import { PopupEntryNode } from './entry-node'
+import { Entries } from '../../types/entry-type'
+import { BackButton } from '../Button/back'
+import { EntryLeaf } from '../Entry/leaf'
+import { EntryNode } from '../Entry/node'
 import { NoEntries } from './no-entries'
 
 interface Props {
   entries: Record<string, Entries> | Entries
 }
 
-export const PopupEntries: React.FC<Props> = (props) => {
+export const EntryList: React.FC<Props> = (props) => {
   const { entries } = props
 
   const renderContent = () => {
@@ -23,12 +23,12 @@ export const PopupEntries: React.FC<Props> = (props) => {
         return entries
           .sort((a, b) => b.count - a.count)
           .map((entry, i) => (
-            <PopupEntryLeaf index={i} key={entry.uuid} {...entry} />
+            <EntryLeaf index={i} key={entry.uuid} {...entry} />
           ))
       }
     } else {
       return Object.keys(entries).map((key, i) => (
-        <PopupEntryNode index={i} key={key} nodeKey={key} entries={entries} />
+        <EntryNode index={i} key={key} nodeKey={key} entries={entries} />
       ))
     }
   }

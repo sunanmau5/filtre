@@ -19,7 +19,8 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@contexts/*": ["src/contexts/*"]
     }
   },
   "compileOnSave": true,

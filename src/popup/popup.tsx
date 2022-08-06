@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { ParamContext } from '../contexts/param-context'
-import { PathnameContext } from '../contexts/pathname-context'
-import { UrlContext, UrlType } from '../contexts/url-context'
+import { ParameterContext } from '../contexts/parameter'
+import { PathnameContext } from '../contexts/pathname'
+import { UrlContext, UrlType } from '../contexts/url'
 import { getCurrentTab } from '../utils/tabs'
 import { PopupWithUrl } from './popup-with-url'
 import './popup.css'
@@ -13,7 +13,9 @@ const App: React.FC = () => {
     hostname: '',
     pathname: ''
   })
-  const [searchParams, setSearchParams] = useState<Record<string, string>>({})
+  const [searchParameters, setSearchParameters] = useState<
+    Record<string, string>
+  >({})
   const [pathname, setPathname] = useState<string>('')
 
   const fetchUrl = () => {
@@ -34,9 +36,10 @@ const App: React.FC = () => {
   return (
     <UrlContext.Provider value={{ url, setUrl }}>
       <PathnameContext.Provider value={{ pathname, setPathname }}>
-        <ParamContext.Provider value={{ searchParams, setSearchParams }}>
+        <ParameterContext.Provider
+          value={{ searchParameters, setSearchParameters }}>
           <PopupWithUrl {...url} />
-        </ParamContext.Provider>
+        </ParameterContext.Provider>
       </PathnameContext.Provider>
     </UrlContext.Provider>
   )

@@ -4,15 +4,15 @@
   "description": "Filtre Chrome Extension",
   "prettier": "prettier-config-standard",
   "scripts": {
-    "start": "webpack --watch --progress --config webpack.dev.js",
-    "build": "webpack --watch --progress --config webpack.prod.js",
+    "start": "webpack --watch --progress --config webpack/webpack.dev.js",
+    "build": "webpack --watch --progress --config webpack/webpack.prod.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "npx standard",
     "lint-fix": "npx standard --fix",
     "prepare": "husky install"
   },
-  "author": "",
+  "author": "Sunan Regi Maunakea",
   "devDependencies": {
     "@types/chrome": "^0.0.134",
     "@types/jest": "^28.1.6",

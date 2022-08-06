@@ -6,7 +6,7 @@ interface Props {
   value: string
 }
 
-export const Param: React.FC<Props> = (props) => {
+export const Parameter: React.FC<Props> = (props) => {
   const { paramKey, value } = props
 
   const decodedValue = decodeURIComponent(value)

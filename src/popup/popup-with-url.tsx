@@ -1,14 +1,14 @@
 import { BasicCard } from '@components/BasicCard'
 import { BasicCardTitle } from '@components/BasicCard/title'
+import { EntryList } from '@components/EntryList'
 import React, { useEffect, useState } from 'react'
 import { Router } from 'react-chrome-extension-router'
 import { Box } from 'rebass'
-import { UrlType } from '../contexts/url-context'
+import { NoEntries } from '../components/EntryList/no-entries'
+import { UrlType } from '../contexts/url'
 import { Entries } from '../types/entry-type'
 import { getStoredFilters } from '../utils/storage'
-import { PopupEntries } from './entries'
 import { NavigateAction } from './navigate-action'
-import { NoEntries } from './no-entries'
 
 export const PopupWithUrl: React.FC<UrlType> = (props) => {
   const { hostname, pathname } = props
@@ -39,7 +39,7 @@ export const PopupWithUrl: React.FC<UrlType> = (props) => {
 
       {entries ? (
         <Router>
-          <PopupEntries entries={entries} />
+          <EntryList entries={entries} />
         </Router>
       ) : (
         <NoEntries text="You currently have no entries available for this website." />

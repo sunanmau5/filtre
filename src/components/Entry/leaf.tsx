@@ -1,21 +1,21 @@
+import { Parameter } from '@components/Parameter'
+import { useParameterContext } from '@contexts/parameter'
 import { formatDistance } from 'date-fns'
 import React from 'react'
 import { Flex } from 'rebass'
-import { useParamContext } from '../contexts/param-context'
-import { Entry } from '../types/entry-type'
-import { EntryWrapper } from './entry-wrapper'
-import { Param } from './param'
+import { Entry } from '../../types/entry-type'
+import { EntryWrapper } from './wrapper'
 
 type Props = Entry & {
   index: number
 }
 
-export const PopupEntryLeaf: React.FC<Props> = (props) => {
+export const EntryLeaf: React.FC<Props> = (props) => {
   const { lastUpdatedAt, paramKey, paramValue, count, index } = props
-  const { setSearchParams } = useParamContext()
+  const { setSearchParameters } = useParameterContext()
 
   const handleClick = () => {
-    setSearchParams((prev) => ({
+    setSearchParameters((prev) => ({
       ...prev,
       [paramKey]: paramValue
     }))
@@ -24,7 +24,7 @@ export const PopupEntryLeaf: React.FC<Props> = (props) => {
   return (
     <EntryWrapper index={index} onClick={handleClick}>
       <Flex sx={{ flexDirection: 'column', gap: 2 }}>
-        <Param paramKey={paramKey} value={paramValue} />
+        <Parameter paramKey={paramKey} value={paramValue} />
         <span>{formatDistance(lastUpdatedAt, new Date())}</span>
       </Flex>
       <Flex

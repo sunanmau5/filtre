@@ -1,8 +1,8 @@
+import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { goBack } from 'react-chrome-extension-router'
 import { ArrowLeft } from 'react-feather'
 import { Flex, Text } from 'rebass'
-import { usePathnameContext } from '../contexts/pathname-context'
 
 export const BackButton: React.FC = () => {
   const { pathname, setPathname } = usePathnameContext()
