@@ -1,20 +1,23 @@
+import { ConfigProvider } from '@contexts/config'
 import { ParameterProvider } from '@contexts/parameter'
 import { PathnameProvider } from '@contexts/pathname'
 import { UrlProvider } from '@contexts/url'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Popup } from './popup'
 import './index.css'
+import { Popup } from './popup'
 
 const App: React.FC = () => {
   return (
-    <UrlProvider>
-      <PathnameProvider>
-        <ParameterProvider>
-          <Popup />
-        </ParameterProvider>
-      </PathnameProvider>
-    </UrlProvider>
+    <ConfigProvider>
+      <UrlProvider>
+        <PathnameProvider>
+          <ParameterProvider>
+            <Popup />
+          </ParameterProvider>
+        </PathnameProvider>
+      </UrlProvider>
+    </ConfigProvider>
   )
 }
 

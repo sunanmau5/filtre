@@ -8,6 +8,7 @@ export const InputField: React.FC<InputProps> = (props) => {
     <Input
       sx={{
         cursor: 'text',
+        borderRadius: 5,
         borderColor: 'rgb(209, 213, 219)',
         ':disabled': { bg: 'rgb(243, 244, 246)' },
         ...sx

@@ -6,10 +6,13 @@ export const PrimaryButton: React.FC<ButtonProps> = (props) => {
   return (
     <Button
       sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         minWidth: 75,
         p: 2,
         cursor: 'pointer',
-        borderRadius: 0,
+        borderRadius: 5,
         bg: 'rgb(96, 165, 250)',
         ':hover': { bg: 'rgb(59, 130, 246)' },
         ':active': { bg: 'rgb(37, 99, 235)' },

@@ -7,7 +7,7 @@ import { InputField } from '@components/InputField'
 import { useConfigContext } from '@contexts/config'
 import { Label } from '@rebass/forms'
 import React from 'react'
-import { Save, Trash2, X } from 'react-feather'
+import { Plus, Save, Trash2, X } from 'react-feather'
 import { Flex, Text } from 'rebass'
 import { clearFilters, setStoredConfig } from '../utils/storage'
 
@@ -28,14 +28,16 @@ export const Options: React.FC = () => {
   }
 
   const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter' && localKey) {
+    if (e.code === 'Enter') {
       onAddExcludedKey(localKey)
-      setLocalKey('')
     }
   }
 
   const onAddExcludedKey = (key: string) => {
-    setExcludedKeys((prev) => [...new Set([...prev, key])])
+    if (localKey) {
+      setExcludedKeys((prev) => [...new Set([...prev, key])])
+      setLocalKey('')
+    }
   }
 
   const onRemoveExcludedKey = (key: string) => {
@@ -67,22 +69,34 @@ export const Options: React.FC = () => {
               }}>
               <Flex
                 sx={{
+                  flexDirection: ['column', 'row'],
                   alignItems: 'center',
                   gap: 2
                 }}>
-                <Label sx={{ fontSize: 14 }} htmlFor="exclude">
+                <Label
+                  width={[1, 1 / 2]}
+                  sx={{ fontSize: 14 }}
+                  htmlFor="exclude">
                   Exclude Parameters
                 </Label>
-                <InputField
-                  id="exclude"
-                  name="exclude"
-                  defaultValue={localKey}
-                  value={localKey}
-                  onKeyDown={keyDown}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setLocalKey(e.target.value)
-                  }
-                />
+                <Flex width={1} sx={{ gap: 2 }}>
+                  <InputField
+                    id="exclude"
+                    name="exclude"
+                    defaultValue={localKey}
+                    value={localKey}
+                    onKeyDown={keyDown}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setLocalKey(e.target.value)
+                    }
+                  />
+                  <PrimaryButton
+                    sx={{ minWidth: 40 }}
+                    onClick={() => onAddExcludedKey(localKey)}
+                    disabled={!localKey}>
+                    <Plus size={20} color="white" />
+                  </PrimaryButton>
+                </Flex>
               </Flex>
               <Flex
                 as="ul"
@@ -100,6 +114,7 @@ export const Options: React.FC = () => {
                     sx={{
                       bg: 'rgb(229, 231, 235)',
                       alignItems: 'center',
+                      borderRadius: 5,
                       gap: 2
                     }}>
                     <Text>{excludedKey}</Text>
@@ -122,13 +137,7 @@ export const Options: React.FC = () => {
             <Flex flexDirection={['column', 'row']} sx={{ gap: 2 }}>
               <RedButton
                 order={[2, 1]}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 2,
-                  borderRadius: 5
-                }}
+                sx={{ gap: 2 }}
                 width={[1, 1 / 2]}
                 onClick={() => {
                   const confirm = prompt(
@@ -140,17 +149,11 @@ export const Options: React.FC = () => {
                   }
                 }}>
                 <Trash2 size={14} color="white" />
-                Clear Filters
+                Clear All Filters
               </RedButton>
               <PrimaryButton
                 order={[1, 2]}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 2,
-                  borderRadius: 5
-                }}
+                sx={{ gap: 2 }}
                 width={1}
                 disabled={config.excludedParameters === excludedKeys}
                 onClick={saveChanges}>
