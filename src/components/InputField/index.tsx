@@ -2,7 +2,7 @@ import { Input, InputProps } from '@rebass/forms'
 import React from 'react'
 
 export const InputField: React.FC<InputProps> = (props) => {
-  const { title, value, disabled, sx } = props
+  const { sx, ...inputProps } = props
 
   return (
     <Input
@@ -12,9 +12,7 @@ export const InputField: React.FC<InputProps> = (props) => {
         ':disabled': { bg: 'rgb(243, 244, 246)' },
         ...sx
       }}
-      value={value}
-      title={title}
-      disabled={disabled}
+      {...inputProps}
     />
   )
 }

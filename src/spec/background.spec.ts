@@ -5,7 +5,7 @@ describe('background', () => {
 
   it('should add listener on install', () => {
     expect(chrome.runtime.onInstalled.addListener.notCalled).toBe(true)
-    require('../background/background')
+    require('../background')
     expect(chrome.runtime.onInstalled.addListener.calledOnce).toBe(true)
   })
 })

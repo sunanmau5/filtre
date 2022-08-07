@@ -1,36 +1,27 @@
-import React, {
-  forwardRef,
-  ForwardRefExoticComponent,
-  isValidElement,
-  RefAttributes
-} from 'react'
-import { Card } from 'rebass'
+import React, { isValidElement } from 'react'
+import { Card, CardProps } from 'rebass'
 import { BasicCardTitle } from './title'
 
-interface Props {
+type Props = CardProps & {
   title?: string | JSX.Element
   children: JSX.Element | JSX.Element[]
 }
 
-export const BasicCard: ForwardRefExoticComponent<
-  Props & RefAttributes<HTMLDivElement>
-> = forwardRef((props, ref) => {
-  const { title, children } = props
+export const BasicCard: React.FC<Props> = (props) => {
+  const { title, children, sx, ...cardProps } = props
 
   return (
     <Card
-      ref={ref}
-      width={1}
       sx={{
         bg: 'white',
         minWidth: 350,
-        borderWidth: 1,
-        borderRadius: 2,
         boxShadow:
-          '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-      }}>
+          '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        ...sx
+      }}
+      {...cardProps}>
       {isValidElement(title) ? title : <BasicCardTitle>{title}</BasicCardTitle>}
       {children}
     </Card>
   )
-})
+}

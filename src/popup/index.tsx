@@ -4,7 +4,7 @@ import { UrlProvider } from '@contexts/url'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Popup } from './popup'
-import './popup.css'
+import './index.css'
 
 const App: React.FC = () => {
   return (

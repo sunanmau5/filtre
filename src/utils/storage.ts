@@ -3,28 +3,50 @@ import { groupParamsByKey } from './url'
 
 export interface LocalStorage {
   filters?: Record<string, any>
+  config?: Record<string, any>
 }
 
 export type LocalStorageKeys = keyof LocalStorage
 
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest()?.version ?? '1.0.0'
 
-export const setStoredFilters = (
-  filters: Record<string, any>
+export const setStoredKey = (
+  key: LocalStorageKeys,
+  data: Record<string, any>
 ): Promise<void> => {
-  const vals: LocalStorage = { filters }
+  const vals: LocalStorage = { [key]: data }
   return new Promise((resolve) => {
     chrome.storage.local.set(vals, resolve)
   })
 }
 
-export const getStoredFilters = (): Promise<Record<string, any>> => {
-  const keys: LocalStorageKeys[] = ['filters']
+export const getStoredKey = (
+  key: LocalStorageKeys
+): Promise<Record<string, any>> => {
+  const keys: LocalStorageKeys[] = [key]
   return new Promise((resolve) => {
     chrome.storage.local.get(keys, (res: LocalStorage) => {
-      resolve(res.filters ?? {})
+      resolve(res[key] ?? {})
     })
   })
+}
+
+export const setStoredFilters = (
+  filters: Record<string, any>
+): Promise<void> => {
+  return setStoredKey('filters', filters)
+}
+
+export const getStoredFilters = (): Promise<Record<string, any>> => {
+  return getStoredKey('filters')
+}
+
+export const setStoredConfig = (config: Record<string, any>): Promise<void> => {
+  return setStoredKey('config', config)
+}
+
+export const getStoredConfig = (): Promise<Record<string, any>> => {
+  return getStoredKey('config')
 }
 
 const upsertParams = (entries: Entries, params: Record<string, any>) => {
@@ -90,3 +112,7 @@ export const upsertFilter = (url: string) => {
     setStoredFilters(filters)
   })
 }
+
+export const clearFilters = () => setStoredFilters({})
+
+export const clearConfig = () => setStoredConfig({})
