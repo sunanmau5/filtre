@@ -1,5 +1,5 @@
 import { Entries } from '../types/entry-type'
-import { groupParamsByKey } from './url-util'
+import { groupParamsByKey } from './url'
 
 export interface LocalStorage {
   filters?: Record<string, any>

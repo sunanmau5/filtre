@@ -1,50 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
-import { ParameterContext } from '../contexts/parameter'
-import { PathnameContext } from '../contexts/pathname'
-import { UrlContext, UrlType } from '../contexts/url'
-import { getCurrentTab } from '../utils/tabs'
-import { PopupWithUrl } from './popup-with-url'
-import './popup.css'
+import { BasicCard } from '@components/BasicCard'
+import { BasicCardTitle } from '@components/BasicCard/title'
+import { EntryList } from '@components/EntryList'
+import React from 'react'
+import { Box } from 'rebass'
+import { NoEntries } from '../components/EntryList/no-entries'
+import { useUrlContext } from '../contexts/url'
+import { PopupAction } from './popup-action'
+import { PopupWithRouter } from './popup-with-router'
 
-const App: React.FC = () => {
-  const [url, setUrl] = useState<UrlType>({
-    origin: '',
-    hostname: '',
-    pathname: ''
-  })
-  const [searchParameters, setSearchParameters] = useState<
-    Record<string, string>
-  >({})
-  const [pathname, setPathname] = useState<string>('')
-
-  const fetchUrl = () => {
-    getCurrentTab().then((result) => {
-      if (result.url) {
-        const { origin, hostname, pathname } = new URL(result.url)
-        setUrl({ origin, hostname, pathname })
-      }
-    })
-  }
-
-  useEffect(fetchUrl, [])
-
-  if (!url) {
-    return null
-  }
+export const Popup: React.FC = () => {
+  const { url } = useUrlContext()
 
   return (
-    <UrlContext.Provider value={{ url, setUrl }}>
-      <PathnameContext.Provider value={{ pathname, setPathname }}>
-        <ParameterContext.Provider
-          value={{ searchParameters, setSearchParameters }}>
-          <PopupWithUrl {...url} />
-        </ParameterContext.Provider>
-      </PathnameContext.Provider>
-    </UrlContext.Provider>
+    <BasicCard>
+      <Box
+        p={3}
+        sx={{
+          borderBottom: '1px solid rgb(209, 213, 219)',
+          bg: 'white'
+        }}>
+        <BasicCardTitle>{url.hostname}</BasicCardTitle>
+      </Box>
+      <PopupWithRouter
+        errorView={() => (
+          <NoEntries
+            text={'You currently have no entries available for this website.'}
+          />
+        )}>
+        {(entries) => <EntryList entries={entries} />}
+      </PopupWithRouter>
+      <PopupAction />
+    </BasicCard>
   )
 }
-
-const root = document.createElement('div')
-document.body.appendChild(root)
-ReactDOM.render(<App />, root)

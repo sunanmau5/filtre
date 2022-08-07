@@ -7,7 +7,7 @@ import { useParameterContext } from '../contexts/parameter'
 import { usePathnameContext } from '../contexts/pathname'
 import { useUrlContext } from '../contexts/url'
 
-export const NavigateAction: React.FC = () => {
+export const PopupAction: React.FC = () => {
   const [localParams, setLocalParams] = useState<string>('')
 
   const { url } = useUrlContext()
