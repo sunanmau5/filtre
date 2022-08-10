@@ -1,5 +1,5 @@
 {
-  "name": "filtre-extension",
+  "name": "filtre",
   "version": "1.0.0",
   "description": "Filtre Chrome Extension",
   "prettier": "prettier-config-standard",
