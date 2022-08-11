@@ -66,7 +66,7 @@ function getHtmlPlugins(chunks) {
   return chunks.map(
     (chunk) =>
       new HtmlPlugin({
-        title: 'Filtre Extension',
+        title: 'Filtre',
         filename: `${chunk}.html`,
         chunks: [chunk]
       })

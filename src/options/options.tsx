@@ -45,7 +45,9 @@ export const Options: React.FC = () => {
   }
 
   React.useEffect(() => {
-    setExcludedKeys(config.excludedParameters)
+    if (config.excludedParameters) {
+      setExcludedKeys(config.excludedParameters)
+    }
   }, [config.excludedParameters])
 
   return (
@@ -58,7 +60,7 @@ export const Options: React.FC = () => {
           width: [350, 500, 750],
           boxShadow: ''
         }}>
-        <BasicCardTitle>Filtre Extension Options</BasicCardTitle>
+        <BasicCardTitle>Filtre Options</BasicCardTitle>
         <BasicCardContent>
           <Flex sx={{ flexDirection: 'column', gap: 4 }}>
             <Flex
@@ -83,7 +85,6 @@ export const Options: React.FC = () => {
                   <InputField
                     id="exclude"
                     name="exclude"
-                    defaultValue={localKey}
                     value={localKey}
                     onKeyDown={keyDown}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

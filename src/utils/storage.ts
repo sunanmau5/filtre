@@ -80,22 +80,27 @@ const upsertParams = (entries: Entries, params: Record<string, any>) => {
 
 const pathnameToJsonRecursive = (
   json: Record<string, any>,
-  arr: string[],
-  params: Record<string, any>
+  subdirectories: string[],
+  parameters: Record<string, any>
 ): Record<string, any> | undefined => {
   // Get the first element of array
-  const elem = arr.shift()
+  const element = subdirectories.shift()
 
   // Exit condition
-  if (!elem) return
+  if (!element) return
 
-  // If JSON key exists, use the existing object, otherwise an empty object
-  // is created. Or upserting param count if json[elem] is an array.
-  if (!json[elem] || (Array.isArray(json[elem]) && json[elem].length >= 0)) {
-    json[elem] = arr.length === 0 ? upsertParams(json[elem], params) : {}
+  // If JSON key exists, use the existing object, otherwise an empty
+  // object is created. Or upserting param count if json[element] is
+  // an array.
+  if (
+    !json[element] ||
+    (Array.isArray(json[element]) && json[element].length >= 0)
+  ) {
+    json[element] =
+      subdirectories.length === 0 ? upsertParams(json[element], parameters) : {}
   }
 
-  return pathnameToJsonRecursive(json[elem], arr, params)
+  return pathnameToJsonRecursive(json[element], subdirectories, parameters)
 }
 
 export const upsertFilter = (url: string) => {
@@ -103,7 +108,8 @@ export const upsertFilter = (url: string) => {
   const params = new URLSearchParams(search)
   const groupedParams = groupParamsByKey(params)
 
-  const subdir = pathname.split('/').filter((v) => !!v)
+  const subdir = pathname.split('/')
+  subdir.shift()
   getStoredFilters().then((filters) => {
     if (!filters[hostname]) {
       filters[hostname] = {}
