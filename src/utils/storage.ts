@@ -1,14 +1,9 @@
-import { Entries } from '../types/entry-type'
-import { groupParamsByKey } from './url'
-
 export interface LocalStorage {
   filters?: Record<string, any>
   config?: Record<string, any>
 }
 
 export type LocalStorageKeys = keyof LocalStorage
-
-const STORE_FORMAT_VERSION = chrome.runtime.getManifest()?.version ?? '1.0.0'
 
 export const setStoredKey = (
   key: LocalStorageKeys,
@@ -47,76 +42,6 @@ export const setStoredConfig = (config: Record<string, any>): Promise<void> => {
 
 export const getStoredConfig = (): Promise<Record<string, any>> => {
   return getStoredKey('config')
-}
-
-const upsertParams = (entries: Entries, params: Record<string, any>) => {
-  const localEntries = entries || []
-  Object.entries(params).map(([key, value]) => {
-    const idx = localEntries?.findIndex(
-      (obj) => obj.paramKey === key && obj.paramValue === value
-    )
-
-    if (idx > -1) {
-      localEntries[idx] = {
-        ...localEntries[idx],
-        version: STORE_FORMAT_VERSION,
-        count: localEntries[idx].count + 1,
-        lastUpdatedAt: Date.now()
-      }
-    } else {
-      localEntries.push({
-        uuid: crypto.randomUUID(),
-        createdAt: Date.now(),
-        version: STORE_FORMAT_VERSION,
-        paramKey: key,
-        paramValue: value,
-        count: 1,
-        lastUpdatedAt: Date.now()
-      })
-    }
-  })
-  return localEntries
-}
-
-const pathnameToJsonRecursive = (
-  json: Record<string, any>,
-  subdirectories: string[],
-  parameters: Record<string, any>
-): Record<string, any> | undefined => {
-  // Get the first element of array
-  const element = subdirectories.shift()
-
-  // Exit condition
-  if (!element) return
-
-  // If JSON key exists, use the existing object, otherwise an empty
-  // object is created. Or upserting param count if json[element] is
-  // an array.
-  if (
-    !json[element] ||
-    (Array.isArray(json[element]) && json[element].length >= 0)
-  ) {
-    json[element] =
-      subdirectories.length === 0 ? upsertParams(json[element], parameters) : {}
-  }
-
-  return pathnameToJsonRecursive(json[element], subdirectories, parameters)
-}
-
-export const upsertFilter = (url: string) => {
-  const { hostname, pathname, search } = new URL(url)
-  const params = new URLSearchParams(search)
-  const groupedParams = groupParamsByKey(params)
-
-  const subdir = pathname.split('/')
-  subdir.shift()
-  getStoredFilters().then((filters) => {
-    if (!filters[hostname]) {
-      filters[hostname] = {}
-    }
-    pathnameToJsonRecursive(filters[hostname], subdir, groupedParams)
-    setStoredFilters(filters)
-  })
 }
 
 export const clearFilters = () => setStoredFilters({})

@@ -3,10 +3,10 @@ import { useParameterContext } from '@contexts/parameter'
 import { formatDistance } from 'date-fns'
 import React from 'react'
 import { Flex } from 'rebass'
-import { Entry } from '../../types/entry-type'
+import { ParameterType } from '../../types/entry-type'
 import { EntryWrapper } from './wrapper'
 
-type Props = Entry & {
+type Props = ParameterType & {
   index: number
 }
 
@@ -24,7 +24,7 @@ export const EntryLeaf: React.FC<Props> = (props) => {
   return (
     <EntryWrapper index={index} onClick={handleClick}>
       <Flex sx={{ flexDirection: 'column', gap: 2 }}>
-        <Parameter paramKey={paramKey} value={paramValue} />
+        <Parameter paramKey={paramKey} paramValue={paramValue} />
         <span>{formatDistance(lastUpdatedAt, new Date())}</span>
       </Flex>
       <Flex

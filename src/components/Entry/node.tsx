@@ -4,22 +4,22 @@ import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Text } from 'rebass'
 import { PopupWithAction } from '../../popup/popup-with-action'
-import { Entries } from '../../types/entry-type'
+import { Paths } from '../../types/entry-type'
 import { EntryWrapper } from './wrapper'
 
 interface Props {
   index: number
   nodeKey: string
-  entries: Record<string, Entries>
+  paths: Paths
 }
 
 export const EntryNode: React.FC<Props> = (props) => {
-  const { index, nodeKey, entries } = props
+  const { index, nodeKey, paths } = props
   const { setPathname } = usePathnameContext()
 
   const handleClick = () => {
-    setPathname((prev) => `${prev}/${nodeKey}`)
-    goTo(PopupWithAction, { entries: entries[nodeKey] })
+    setPathname((prev) => `${prev}${nodeKey}`)
+    goTo(PopupWithAction, { paths: paths[index] })
   }
 
   return (

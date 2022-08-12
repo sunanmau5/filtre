@@ -3,13 +3,13 @@ import { Flex, Heading, Text } from 'rebass'
 
 interface Props {
   paramKey: string
-  value: string
+  paramValue: string
 }
 
 export const Parameter: React.FC<Props> = (props) => {
-  const { paramKey, value } = props
+  const { paramKey, paramValue } = props
 
-  const decodedValue = decodeURIComponent(value)
+  const decodedValue = decodeURIComponent(paramValue)
 
   return (
     <Flex flexDirection="column" maxWidth={250}>

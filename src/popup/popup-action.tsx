@@ -26,6 +26,8 @@ export const PopupAction: React.FC = () => {
         )
       })
       setLocalParams(str)
+    } else {
+      setLocalParams('')
     }
   }, [searchParameters])
 

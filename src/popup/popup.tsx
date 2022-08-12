@@ -1,6 +1,8 @@
 import { BasicCard } from '@components/BasicCard'
+import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { BasicCardTitle } from '@components/BasicCard/title'
-import { NoEntries } from '@components/EntryList/no-entries'
+import { NoEntries } from '@components/Entry/no-entries'
+import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { Box } from 'rebass'
 import { useUrlContext } from '../contexts/url'
@@ -9,6 +11,12 @@ import { PopupWithRouter } from './popup-with-router'
 
 export const Popup: React.FC = () => {
   const { url } = useUrlContext()
+  const { pathname } = usePathnameContext()
+  const [customPathname, setCustomPathname] = React.useState<string>(pathname)
+
+  React.useEffect(() => {
+    setCustomPathname(pathname.replace(/[\/]/g, ' > '))
+  }, [pathname])
 
   return (
     <BasicCard>
@@ -19,6 +27,7 @@ export const Popup: React.FC = () => {
           bg: 'white'
         }}>
         <BasicCardTitle>{url.hostname}</BasicCardTitle>
+        <BasicCardSubtitle truncate>{customPathname}</BasicCardSubtitle>
       </Box>
       <PopupWithRouter
         errorView={() => (
@@ -26,7 +35,7 @@ export const Popup: React.FC = () => {
             text={'You currently have no entries available for this website.'}
           />
         )}>
-        {(entries) => <PopupWithAction entries={entries} />}
+        {(paths) => <PopupWithAction paths={paths} />}
       </PopupWithRouter>
     </BasicCard>
   )

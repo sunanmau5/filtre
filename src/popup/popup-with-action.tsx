@@ -1,12 +1,24 @@
-import { EntryList, EntryListProps } from '@components/EntryList'
+import { Entry } from '@components/Entry'
+import { EntryRoot } from '@components/Entry/root'
 import React from 'react'
+import { PathType } from '../types/entry-type'
 import { PopupAction } from './popup-action'
 
-export const PopupWithAction: React.FC<EntryListProps> = (props) => {
-  const { entries } = props
+interface Props {
+  paths: PathType | PathType[]
+}
+
+export const PopupWithAction: React.FC<Props> = (props) => {
+  const { paths } = props
+  console.log({ paths })
+
   return (
     <>
-      <EntryList entries={entries} />
+      {Array.isArray(paths) ? (
+        <EntryRoot paths={paths} />
+      ) : (
+        <Entry entry={paths} />
+      )}
       <PopupAction />
     </>
   )
