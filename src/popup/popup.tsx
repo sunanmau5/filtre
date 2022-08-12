@@ -6,7 +6,7 @@ import { NoEntries } from '@components/Entry/no-entries'
 import { usePathnameContext } from '@contexts/pathname'
 import { useUrlContext } from '@contexts/url'
 import React from 'react'
-import { X } from 'react-feather'
+import { Settings, X } from 'react-feather'
 import { Box, Flex, Image } from 'rebass'
 import { PopupWithRouter } from './popup-with-router'
 
@@ -32,18 +32,31 @@ export const Popup: React.FC = () => {
         <Flex sx={{ alignItems: 'center', gap: 3 }}>
           <Image src="icons/icon.png" width={24} height={24} />
           <BasicCardTitle>Filtre</BasicCardTitle>
-          <Flex
-            sx={{
-              marginLeft: 'auto',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              borderRadius: 9999,
-              p: '2px',
-              ':hover': { bg: 'rgb(229, 231, 235)' }
-            }}
-            onClick={() => window.close()}>
-            <X size={20} strokeWidth={2} color="rgb(156, 163, 175)" />
+          <Flex sx={{ marginLeft: 'auto', gap: 2 }}>
+            <Flex
+              sx={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                borderRadius: 9999,
+                p: 1,
+                ':hover': { bg: 'rgb(229, 231, 235)' }
+              }}
+              onClick={() => chrome.runtime.openOptionsPage()}>
+              <Settings size={16} strokeWidth={2} color="rgb(156, 163, 175)" />
+            </Flex>
+            <Flex
+              sx={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                borderRadius: 9999,
+                p: '2px',
+                ':hover': { bg: 'rgb(229, 231, 235)' }
+              }}
+              onClick={() => window.close()}>
+              <X size={20} strokeWidth={2} color="rgb(156, 163, 175)" />
+            </Flex>
           </Flex>
         </Flex>
         <BasicCardSubtitle
