@@ -7,24 +7,26 @@ import { EntryLeaf } from '../Entry/leaf'
 import { EntryNode } from '../Entry/node'
 import { NoEntries } from './no-entries'
 
-interface Props {
+export interface EntryListProps {
   entries: Record<string, Entries> | Entries
 }
 
-export const EntryList: React.FC<Props> = (props) => {
+export const EntryList: React.FC<EntryListProps> = (props) => {
   const { entries } = props
   const { config } = useConfigContext()
   const { excludedParameters } = config
 
   const renderContent = () => {
     if (Array.isArray(entries)) {
-      if (entries.length === 0) {
+      const localEntries = entries.filter(
+        ({ paramKey }) => !excludedParameters.includes(paramKey)
+      )
+      if (localEntries.length === 0) {
         return (
           <NoEntries text="You currently have no query parameters available for this pathname. You can nevertheless navigate to the page!" />
         )
       } else {
-        return entries
-          .filter(({ paramKey }) => !excludedParameters.includes(paramKey))
+        return localEntries
           .sort((a, b) => b.count - a.count)
           .map((entry, i) => (
             <EntryLeaf index={i} key={entry.uuid} {...entry} />

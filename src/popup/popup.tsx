@@ -1,11 +1,10 @@
 import { BasicCard } from '@components/BasicCard'
 import { BasicCardTitle } from '@components/BasicCard/title'
-import { EntryList } from '@components/EntryList'
+import { NoEntries } from '@components/EntryList/no-entries'
 import React from 'react'
 import { Box } from 'rebass'
-import { NoEntries } from '../components/EntryList/no-entries'
 import { useUrlContext } from '../contexts/url'
-import { PopupAction } from './popup-action'
+import { PopupWithAction } from './popup-with-action'
 import { PopupWithRouter } from './popup-with-router'
 
 export const Popup: React.FC = () => {
@@ -27,9 +26,8 @@ export const Popup: React.FC = () => {
             text={'You currently have no entries available for this website.'}
           />
         )}>
-        {(entries) => <EntryList entries={entries} />}
+        {(entries) => <PopupWithAction entries={entries} />}
       </PopupWithRouter>
-      <PopupAction />
     </BasicCard>
   )
 }

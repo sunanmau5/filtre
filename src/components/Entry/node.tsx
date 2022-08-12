@@ -1,9 +1,9 @@
-import { EntryList } from '@components/EntryList'
 import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Text } from 'rebass'
+import { PopupWithAction } from '../../popup/popup-with-action'
 import { Entries } from '../../types/entry-type'
 import { EntryWrapper } from './wrapper'
 
@@ -19,7 +19,7 @@ export const EntryNode: React.FC<Props> = (props) => {
 
   const handleClick = () => {
     setPathname((prev) => `${prev}/${nodeKey}`)
-    goTo(EntryList, { entries: entries[nodeKey] })
+    goTo(PopupWithAction, { entries: entries[nodeKey] })
   }
 
   return (
