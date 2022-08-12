@@ -22,10 +22,12 @@ export const PopupWithRouter: React.FC<Props> = (props) => {
   const fetchParams = () => {
     getStoredFilters().then((filters) => {
       if (filters[hostname]) {
-        setEntries(filters[hostname])
-      } else {
-        setEntries(null)
+        if (filters[hostname][pathname]) {
+          setEntries(filters[hostname][pathname])
+          return
+        }
       }
+      setEntries(null)
     })
   }
 

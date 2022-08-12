@@ -1,3 +1,7 @@
-import { upsertFilter } from '../utils/storage'
+// import { upsertFilterV2 } from '../utils/storage'
 
-upsertFilter(document.location.href)
+// if (document.location.search) {
+//   upsertFilterV2(document.location.href)
+// }
+
+export {}

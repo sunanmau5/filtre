@@ -52,7 +52,7 @@ export const getStoredConfig = (): Promise<Record<string, any>> => {
 const upsertParams = (entries: Entries, params: Record<string, any>) => {
   const localEntries = entries || []
   Object.entries(params).map(([key, value]) => {
-    const idx = localEntries?.findIndex(
+    const idx = localEntries.findIndex(
       (obj) => obj.paramKey === key && obj.paramValue === value
     )
 
@@ -84,11 +84,14 @@ const pathnameToJsonRecursive = (
   parameters: Record<string, any>
 ): Record<string, any> | undefined => {
   // Get the first element of array
-  const element = subdirectories.shift()
+  let element = subdirectories.shift()
 
   // Exit condition
-  if (!element) return
+  if (typeof element === 'undefined' || element === null) return
 
+  if (element === '') {
+    element = '/'
+  }
   // If JSON key exists, use the existing object, otherwise an empty
   // object is created. Or upserting param count if json[element] is
   // an array.
@@ -115,6 +118,28 @@ export const upsertFilter = (url: string) => {
       filters[hostname] = {}
     }
     pathnameToJsonRecursive(filters[hostname], subdir, groupedParams)
+    setStoredFilters(filters)
+  })
+}
+
+export const upsertFilterV2 = (url: string) => {
+  const { hostname, pathname, search } = new URL(url)
+
+  // Early exit if no query parameters is passed
+  if (!search) return
+
+  const params = new URLSearchParams(search)
+  const groupedParams = groupParamsByKey(params)
+
+  getStoredFilters().then((filters) => {
+    if (!filters[hostname]) {
+      filters[hostname] = {}
+    }
+    if (!filters[hostname][pathname]) {
+      filters[hostname][pathname] = []
+    }
+    const entries = upsertParams(filters[hostname][pathname], groupedParams)
+    filters[hostname][pathname] = entries
     setStoredFilters(filters)
   })
 }

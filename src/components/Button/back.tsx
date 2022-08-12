@@ -1,3 +1,4 @@
+import { useParameterContext } from '@contexts/parameter'
 import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { goBack } from 'react-chrome-extension-router'
@@ -6,9 +7,11 @@ import { Flex, Text } from 'rebass'
 
 export const BackButton: React.FC = () => {
   const { pathname, setPathname } = usePathnameContext()
+  const { setSearchParameters } = useParameterContext()
 
   const handleClick = () => {
-    setPathname((prev) => prev.substring(0, prev.lastIndexOf('/')))
+    setPathname('')
+    setSearchParameters({})
     goBack()
   }
 
