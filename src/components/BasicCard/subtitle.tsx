@@ -1,8 +1,12 @@
 import React from 'react'
-import { Text } from 'rebass'
+import { Text, TextProps } from 'rebass'
 
-export const BasicCardSubtitle: React.FC<{ truncate?: boolean }> = (props) => {
-  const { truncate = true } = props
+type Props = TextProps & {
+  truncate?: boolean
+}
+
+export const BasicCardSubtitle: React.FC<Props> = (props) => {
+  const { truncate = true, sx, children, ...textProps } = props
   return (
     <Text
       color="rgb(107, 114, 128)"
@@ -13,11 +17,13 @@ export const BasicCardSubtitle: React.FC<{ truncate?: boolean }> = (props) => {
           ? {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              ...sx
             }
-          : undefined
-      }>
-      {props.children}
+          : sx
+      }
+      {...textProps}>
+      {children}
     </Text>
   )
 }

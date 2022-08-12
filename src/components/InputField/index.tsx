@@ -9,7 +9,7 @@ export const InputField: React.FC<InputProps> = (props) => {
       sx={{
         cursor: 'text',
         borderRadius: 5,
-        borderColor: 'rgb(209, 213, 219)',
+        borderColor: 'rgb(229, 231, 235)',
         ':disabled': { bg: 'rgb(243, 244, 246)' },
         ...sx
       }}

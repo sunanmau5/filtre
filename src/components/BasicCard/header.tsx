@@ -6,10 +6,11 @@ export const BasicCardHeader: React.FC<TextProps> = (props) => {
   return (
     <Text
       fontSize={16}
-      p={2}
+      px={3}
+      py={2}
       sx={{
         my: 0,
-        fontWeight: 500,
+        fontWeight: 600,
         ...sx
       }}
       {...textProps}>

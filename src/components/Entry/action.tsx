@@ -3,11 +3,11 @@ import { InputField } from '@components/InputField'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Flex } from 'rebass'
-import { useParameterContext } from '../contexts/parameter'
-import { usePathnameContext } from '../contexts/pathname'
-import { useUrlContext } from '../contexts/url'
+import { useParameterContext } from '../../contexts/parameter'
+import { usePathnameContext } from '../../contexts/pathname'
+import { useUrlContext } from '../../contexts/url'
 
-export const PopupAction: React.FC = () => {
+export const EntryAction: React.FC = () => {
   const [localParams, setLocalParams] = useState<string>('')
 
   const { url } = useUrlContext()
@@ -32,12 +32,7 @@ export const PopupAction: React.FC = () => {
   }, [searchParameters])
 
   return (
-    <Flex
-      sx={{
-        p: 3,
-        gap: 3,
-        borderTop: '1px solid rgb(209, 213, 219)'
-      }}>
+    <Flex p={3} sx={{ gap: 3 }}>
       <InputField
         value={url.hostname + pathname + localParams}
         title={url.hostname + pathname + localParams}

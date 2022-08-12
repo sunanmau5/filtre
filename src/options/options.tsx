@@ -57,8 +57,9 @@ export const Options: React.FC = () => {
           p: 3,
           m: 3,
           borderRadius: '0.5rem',
-          width: [350, 500, 750],
-          boxShadow: ''
+          width: [350, 500, 800],
+          boxShadow: '',
+          bg: 'white'
         }}>
         <BasicCardTitle>Filtre Options</BasicCardTitle>
         <BasicCardContent>

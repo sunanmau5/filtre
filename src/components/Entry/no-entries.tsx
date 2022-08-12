@@ -16,7 +16,8 @@ export const NoEntries: React.FC<Props> = (props) => {
       sx={{
         px: 3,
         py: 4,
-        bg: 'rgb(243, 244, 246)'
+        bg: 'white',
+        borderRadius: 10
       }}>
       <Text>{text}</Text>
     </Flex>

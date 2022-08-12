@@ -2,8 +2,8 @@ import { useParameterContext } from '@contexts/parameter'
 import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { goBack } from 'react-chrome-extension-router'
-import { ArrowLeft } from 'react-feather'
-import { Flex, Text } from 'rebass'
+import { ChevronLeft } from 'react-feather'
+import { Flex } from 'rebass'
 
 export const BackButton: React.FC = () => {
   const { pathname, setPathname } = usePathnameContext()
@@ -21,20 +21,16 @@ export const BackButton: React.FC = () => {
 
   return (
     <Flex
+      p={1}
       onClick={handleClick}
       sx={{
-        px: 3,
-        py: 2,
-        gap: 2,
         alignItems: 'center',
+        justifyContent: 'center',
         cursor: 'pointer',
-        ':hover': { bg: 'rgb(219, 234, 254)' },
-        borderBottom: '1px solid rgb(209, 213, 219)'
+        ':hover': { bg: 'rgb(229, 231, 235)' },
+        borderRadius: 5
       }}>
-      <ArrowLeft size={16} />
-      <Text fontSize={14} sx={{ textDecoration: 'underline' }}>
-        Back
-      </Text>
+      <ChevronLeft size={16} />
     </Flex>
   )
 }
