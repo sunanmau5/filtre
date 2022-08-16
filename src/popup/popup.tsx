@@ -30,7 +30,7 @@ export const Popup: React.FC = () => {
           borderBottom: '2px solid rgb(229, 231, 235)'
         }}>
         <Flex sx={{ alignItems: 'center', gap: 3 }}>
-          <Image src="icons/icon.png" width={24} height={24} />
+          <Image src="icons/filtre-icon-48.png" width={24} height={24} />
           <BasicCardTitle>Filtre</BasicCardTitle>
           <Flex sx={{ marginLeft: 'auto', gap: 2 }}>
             <Flex

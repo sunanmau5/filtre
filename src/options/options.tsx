@@ -8,7 +8,7 @@ import { useConfigContext } from '@contexts/config'
 import { Label } from '@rebass/forms'
 import React from 'react'
 import { Plus, Save, Trash2, X } from 'react-feather'
-import { Flex, Text } from 'rebass'
+import { Flex, Image, Text } from 'rebass'
 import { clearFilters, setStoredConfig } from '../utils/storage'
 
 export const Options: React.FC = () => {
@@ -61,7 +61,10 @@ export const Options: React.FC = () => {
           boxShadow: '',
           bg: 'white'
         }}>
-        <BasicCardTitle>Filtre Options</BasicCardTitle>
+        <Flex sx={{ alignItems: 'center', gap: 3 }}>
+          <Image src="icons/filtre-icon-48.png" width={28} height={28} />
+          <BasicCardTitle>Filtre Options</BasicCardTitle>
+        </Flex>
         <BasicCardContent>
           <Flex sx={{ flexDirection: 'column', gap: 4 }}>
             <Flex

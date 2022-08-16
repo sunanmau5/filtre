@@ -110,7 +110,7 @@ const recursiveFunc = (
   }
 }
 
-const upsertFilter = (url: string) => {
+const upsertFilter = async (url: string): Promise<number> => {
   const { hostname, pathname, search } = new URL(url)
   const params = new URLSearchParams(search)
   const groupedParams = groupParamsByKey(params)
@@ -122,22 +122,24 @@ const upsertFilter = (url: string) => {
     subdir.shift()
   }
 
-  getStoredFilters().then((filters) => {
-    //
-    //
-    if (!filters[hostname]) {
-      filters[hostname] = []
-    }
+  const filters = await getStoredFilters()
+  //
+  //
+  if (!filters[hostname]) {
+    filters[hostname] = []
+  }
 
-    recursiveFunc(filters[hostname], subdir, groupedParams)
-    setStoredFilters(filters)
-  })
+  recursiveFunc(filters[hostname], subdir, groupedParams)
+  setStoredFilters(filters)
+
+  return Object.keys(filters[hostname]).length
 }
 
-chrome.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   //
   //
   if (tab.url && changeInfo.status === 'complete') {
-    upsertFilter(tab.url)
+    const badgeNumber = await upsertFilter(tab.url)
+    chrome.action.setBadgeText({ tabId, text: badgeNumber.toString() })
   }
 })
