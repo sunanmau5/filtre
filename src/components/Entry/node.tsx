@@ -1,9 +1,10 @@
+import { useParameterContext } from '@contexts/parameter'
 import { usePathnameContext } from '@contexts/pathname'
 import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Flex, Text } from 'rebass'
-import { Paths } from '../../types/entry-type'
+import { Paths } from '../../types'
 import { EntryDecider } from './decider'
 
 interface Props {
@@ -15,9 +16,11 @@ interface Props {
 export const EntryNode: React.FC<Props> = (props) => {
   const { index, nodeKey, paths } = props
   const { setPathname } = usePathnameContext()
+  const { setSearchParameters } = useParameterContext()
 
   const handleClick = () => {
     setPathname((prev) => `${prev}${nodeKey}`)
+    setSearchParameters({})
     goTo(EntryDecider, { paths: paths[index] })
   }
 

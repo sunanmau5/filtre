@@ -8,9 +8,7 @@ interface Props {
 
 export const Parameter: React.FC<Props> = (props) => {
   const { paramKey, paramValue } = props
-
   const decodedValue = decodeURIComponent(paramValue)
-
   return (
     <Flex flexDirection="column" maxWidth={250}>
       <Heading

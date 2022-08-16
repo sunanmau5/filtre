@@ -15,11 +15,7 @@ export const BackButton: React.FC = () => {
     goBack()
   }
 
-  if (!pathname) {
-    return null
-  }
-
-  return (
+  return pathname ? (
     <Flex
       p={1}
       onClick={handleClick}
@@ -32,5 +28,5 @@ export const BackButton: React.FC = () => {
       }}>
       <ChevronLeft size={16} />
     </Flex>
-  )
+  ) : null
 }

@@ -9,7 +9,6 @@ import { useUrlContext } from '../../contexts/url'
 
 export const EntryAction: React.FC = () => {
   const [localParams, setLocalParams] = useState<string>('')
-
   const { url } = useUrlContext()
   const { searchParameters } = useParameterContext()
   const { pathname } = usePathnameContext()

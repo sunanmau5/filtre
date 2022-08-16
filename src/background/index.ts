@@ -1,4 +1,4 @@
-import { Parameters, PathType } from '../types/entry-type'
+import { Entry, Parameters, PathType } from '../types'
 import {
   getStoredFilters,
   setStoredConfig,
@@ -15,14 +15,16 @@ chrome.runtime.onInstalled.addListener(() => {
   setStoredConfig({ excludedParameters: [] })
 })
 
-const upsertParams = (
+export const upsertParams = (
   currentParams: Parameters,
-  newParams: Record<string, any>
+  newParams: URLSearchParams
 ) => {
   //
   //
   const localParams = currentParams || []
-  Object.entries(newParams).map(([key, value]) => {
+  const groupedParams = groupParamsByKey(newParams)
+
+  Object.entries(groupedParams).map(([key, value]) => {
     //
     //
     const paramIndex = localParams?.findIndex(
@@ -46,7 +48,7 @@ const upsertParams = (
         createdAt: Date.now(),
         version: STORE_FORMAT_VERSION,
         paramKey: key,
-        paramValue: value,
+        paramValue: value.toString(),
         count: 1,
         lastUpdatedAt: Date.now()
       })
@@ -55,10 +57,10 @@ const upsertParams = (
   return localParams
 }
 
-const recursiveFunc = (
+export const recursiveFunc = (
   filters: PathType[],
   paths: Array<string>,
-  parameters: Record<string, string | string[]>
+  parameters: URLSearchParams
 ) => {
   //
   // Get the first element of paths array
@@ -110,29 +112,32 @@ const recursiveFunc = (
   }
 }
 
-const upsertFilter = async (url: string): Promise<number> => {
-  const { hostname, pathname, search } = new URL(url)
-  const params = new URLSearchParams(search)
-  const groupedParams = groupParamsByKey(params)
-
+export const getSubdirectories = (pathname: string) => {
   const subdir = pathname.split('/').map((p) => `/${p}`)
 
-  // Ignore first slash if pathname exists
-  if (pathname !== '/') {
-    subdir.shift()
-  }
+  // Ignore first slash
+  subdir.shift()
 
-  const filters = await getStoredFilters()
-  //
-  //
+  return subdir
+}
+
+export const queryStringToJson = (filters: Entry, url: string) => {
+  const { hostname, pathname, searchParams } = new URL(url)
+  const subdir = getSubdirectories(pathname)
+
   if (!filters[hostname]) {
     filters[hostname] = []
   }
 
-  recursiveFunc(filters[hostname], subdir, groupedParams)
-  setStoredFilters(filters)
+  recursiveFunc(filters[hostname], subdir, searchParams)
+  return filters[hostname]
+}
 
-  return Object.keys(filters[hostname]).length
+const upsertFilter = async (url: string): Promise<number> => {
+  const filters = await getStoredFilters()
+  const hostnameFilters = queryStringToJson(filters, url)
+  setStoredFilters(filters)
+  return hostnameFilters.length
 }
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {

@@ -54,19 +54,22 @@ export const Options: React.FC = () => {
     <Flex sx={{ justifyContent: 'center' }}>
       <BasicCard
         sx={{
-          p: 3,
           m: 3,
-          borderRadius: '0.5rem',
-          width: [350, 500, 800],
-          boxShadow: '',
-          bg: 'white'
+          width: [350, 500, 800]
         }}>
         <Flex sx={{ alignItems: 'center', gap: 3 }}>
           <Image src="icons/filtre-icon-48.png" width={28} height={28} />
           <BasicCardTitle>Filtre Options</BasicCardTitle>
         </Flex>
         <BasicCardContent>
-          <Flex sx={{ flexDirection: 'column', gap: 4 }}>
+          <Flex
+            p={3}
+            sx={{
+              flexDirection: 'column',
+              gap: 4,
+              bg: 'white',
+              borderRadius: '0.5rem'
+            }}>
             <Flex
               sx={{
                 flexDirection: 'column',

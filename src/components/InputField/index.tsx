@@ -3,7 +3,6 @@ import React from 'react'
 
 export const InputField: React.FC<InputProps> = (props) => {
   const { sx, ...inputProps } = props
-
   return (
     <Input
       sx={{

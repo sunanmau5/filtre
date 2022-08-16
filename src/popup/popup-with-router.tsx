@@ -1,7 +1,7 @@
 import { useUrlContext } from '@contexts/url'
 import React from 'react'
 import { Router } from 'react-chrome-extension-router'
-import { Paths } from '../types/entry-type'
+import { Paths } from '../types'
 import { getStoredFilters } from '../utils/storage'
 
 interface Props {
@@ -11,10 +11,8 @@ interface Props {
 
 export const PopupWithRouter: React.FC<Props> = (props) => {
   const { errorView, children } = props
-
   const { url } = useUrlContext()
   const { hostname, pathname } = url
-
   const [entries, setEntries] = React.useState<Paths | null>(null)
 
   const fetchParams = () => {
@@ -29,9 +27,5 @@ export const PopupWithRouter: React.FC<Props> = (props) => {
 
   React.useEffect(fetchParams, [hostname, pathname])
 
-  if (!entries) {
-    return errorView()
-  }
-
-  return <Router>{children(entries)}</Router>
+  return entries ? <Router>{children(entries)}</Router> : errorView()
 }

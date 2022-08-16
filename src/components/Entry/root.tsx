@@ -1,7 +1,7 @@
 import { BasicCardHeader } from '@components/BasicCard/header'
 import React from 'react'
 import { Flex } from 'rebass'
-import { Paths } from '../../types/entry-type'
+import { Paths } from '../../types'
 import { EntryNode } from './node'
 
 export interface EntryRootProps {
@@ -15,8 +15,6 @@ export const EntryRoot: React.FC<EntryRootProps> = (props) => {
       <BasicCardHeader fontSize={18}>Paths</BasicCardHeader>
       <Flex flexDirection="column" sx={{ gap: 2 }}>
         {paths.map((path, i) => {
-          //
-          //
           const { name } = path
           return <EntryNode index={i} key={name} nodeKey={name} paths={paths} />
         })}

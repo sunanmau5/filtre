@@ -8,7 +8,6 @@ interface Props {
 
 export const EntryWrapper: React.FC<Props> = (props) => {
   const { onClick, index, children } = props
-
   return (
     <Flex
       onClick={onClick}

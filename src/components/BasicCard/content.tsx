@@ -8,7 +8,7 @@ import { Box, BoxProps } from 'rebass'
  */
 export const BasicCardContent: React.FC<BoxProps> = (props) => {
   return (
-    <Box {...props} pt={4}>
+    <Box {...props} pt={3}>
       {props.children}
     </Box>
   )

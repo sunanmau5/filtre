@@ -7,7 +7,6 @@ interface Props {
 
 export const NoEntries: React.FC<Props> = (props) => {
   const { text } = props
-
   return (
     <Flex
       alignItems="center"
