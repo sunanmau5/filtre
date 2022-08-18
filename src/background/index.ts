@@ -1,4 +1,4 @@
-import { Entry, Parameters, PathType } from '../types'
+import { IEntry, IParameters, IPath } from '../types'
 import {
   getStoredFilters,
   setStoredConfig,
@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 export const upsertParams = (
-  currentParams: Parameters,
+  currentParams: IParameters,
   newParams: URLSearchParams
 ) => {
   //
@@ -58,7 +58,7 @@ export const upsertParams = (
 }
 
 export const recursiveFunc = (
-  filters: PathType[],
+  filters: IPath[],
   paths: Array<string>,
   parameters: URLSearchParams
 ) => {
@@ -121,7 +121,7 @@ export const getSubdirectories = (pathname: string) => {
   return subdir
 }
 
-export const queryStringToJson = (filters: Entry, url: string) => {
+export const queryStringToJson = (filters: IEntry, url: string) => {
   const { hostname, pathname, searchParams } = new URL(url)
   const subdir = getSubdirectories(pathname)
 

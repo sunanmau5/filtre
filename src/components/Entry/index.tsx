@@ -5,12 +5,12 @@ import { EntryNode } from '@components/Entry/node'
 import { useConfigContext } from '@contexts/config'
 import React from 'react'
 import { Flex } from 'rebass'
-import { Parameters, Paths, PathType } from '../../types'
+import { IParameters, IPath, IPaths } from '../../types'
 import { EntryAction } from './action'
 import { NoEntries } from './no-entries'
 
 interface EntryProps {
-  entry: PathType
+  entry: IPath
 }
 
 export const Entry: React.FC<EntryProps> = (props) => {
@@ -18,7 +18,7 @@ export const Entry: React.FC<EntryProps> = (props) => {
   const { config } = useConfigContext()
   const { excludedParameters } = config
 
-  const renderSubpaths = (paths: Paths) => {
+  const renderSubpaths = (paths: IPaths) => {
     if (paths.length === 0) {
       return <NoEntries text="You currently have no subpaths available." />
     } else {
@@ -28,7 +28,7 @@ export const Entry: React.FC<EntryProps> = (props) => {
       })
     }
   }
-  const renderParameters = (parameters: Parameters) => {
+  const renderParameters = (parameters: IParameters) => {
     const localEntries = parameters.filter(
       ({ paramKey }) => !excludedParameters.includes(paramKey)
     )

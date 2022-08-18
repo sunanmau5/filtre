@@ -4,13 +4,13 @@ import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Flex, Text } from 'rebass'
-import { Paths } from '../../types'
+import { IPaths } from '../../types'
 import { EntryDecider } from './decider'
 
 interface Props {
   index: number
   nodeKey: string
-  paths: Paths
+  paths: IPaths
 }
 
 export const EntryNode: React.FC<Props> = (props) => {

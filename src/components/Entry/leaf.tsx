@@ -3,10 +3,10 @@ import { useParameterContext } from '@contexts/parameter'
 import { formatDistance } from 'date-fns'
 import React from 'react'
 import { Flex } from 'rebass'
-import { ParameterType } from '../../types'
+import { IParameter } from '../../types'
 import { EntryWrapper } from './wrapper'
 
-type Props = ParameterType & {
+type Props = IParameter & {
   index: number
 }
 

@@ -1,10 +1,10 @@
 import React from 'react'
-import { PathType } from 'src/types'
+import { IPath } from 'src/types'
 import { Entry } from '.'
 import { EntryRoot } from './root'
 
 interface Props {
-  paths: PathType | PathType[]
+  paths: IPath | IPath[]
 }
 
 export const EntryDecider: React.FC<Props> = (props) => {

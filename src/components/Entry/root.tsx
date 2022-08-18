@@ -1,11 +1,11 @@
 import { BasicCardHeader } from '@components/BasicCard/header'
 import React from 'react'
 import { Flex } from 'rebass'
-import { Paths } from '../../types'
+import { IPaths } from '../../types'
 import { EntryNode } from './node'
 
 export interface EntryRootProps {
-  paths: Paths
+  paths: IPaths
 }
 
 export const EntryRoot: React.FC<EntryRootProps> = (props) => {

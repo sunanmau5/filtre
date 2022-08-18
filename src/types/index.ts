@@ -1,4 +1,4 @@
-export type ParameterType = {
+export type IParameter = {
   uuid: string
   createdAt: number
   version: string
@@ -8,16 +8,16 @@ export type ParameterType = {
   lastUpdatedAt: number
 }
 
-export type Parameters = ParameterType[]
+export type IParameters = IParameter[]
 
-export type PathType = {
+export type IPath = {
   name: string
-  subpaths: PathType[]
-  parameters: Parameters
+  subpaths: IPath[]
+  parameters: IParameters
 }
 
-export type Paths = PathType[]
+export type IPaths = IPath[]
 
-export type Entry = {
-  [host: string]: Paths
+export type IEntry = {
+  [host: string]: IPaths
 }

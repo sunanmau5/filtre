@@ -1,15 +1,15 @@
 import React from 'react'
 import { getCurrentTab } from '../utils/tabs'
 
-export type UrlType = {
+export type IURL = {
   origin: string
   hostname: string
   pathname: string
 }
 
 export interface IUrlContext {
-  url: UrlType
-  setUrl: React.Dispatch<React.SetStateAction<UrlType>>
+  url: IURL
+  setUrl: React.Dispatch<React.SetStateAction<IURL>>
 }
 
 export const UrlContext = React.createContext<IUrlContext>({
@@ -26,7 +26,7 @@ export const useUrlContext = () => {
 }
 
 export const UrlProvider: React.FC = ({ children }) => {
-  const [url, setUrl] = React.useState<UrlType>({
+  const [url, setUrl] = React.useState<IURL>({
     origin: '',
     hostname: '',
     pathname: ''
