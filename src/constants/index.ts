@@ -1,0 +1,3 @@
+export const MIN_TOP_FILTERS_COUNT = 1
+export const MAX_TOP_FILTERS_COUNT = 5
+export const DEFAULT_TOP_FILTERS_COUNT = 3

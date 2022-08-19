@@ -2,7 +2,7 @@ import { Parameter } from '@components/Parameter'
 import { useParameterContext } from '@contexts/parameter'
 import { formatDistance } from 'date-fns'
 import React from 'react'
-import { Flex } from 'rebass'
+import { Flex, Text } from 'rebass'
 import { IParameter } from '../../types'
 import { EntryWrapper } from './wrapper'
 
@@ -25,7 +25,9 @@ export const EntryLeaf: React.FC<Props> = (props) => {
     <EntryWrapper index={index} onClick={handleClick}>
       <Flex sx={{ flexDirection: 'column', gap: 2 }}>
         <Parameter paramKey={paramKey} paramValue={paramValue} />
-        <span>{formatDistance(lastUpdatedAt, new Date())}</span>
+        <Text as="span">
+          {formatDistance(lastUpdatedAt, new Date(), { addSuffix: true })}
+        </Text>
       </Flex>
       <Flex
         sx={{

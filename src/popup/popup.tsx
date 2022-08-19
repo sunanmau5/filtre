@@ -1,26 +1,15 @@
 import { BasicCard } from '@components/BasicCard'
 import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { BasicCardTitle } from '@components/BasicCard/title'
+import { CustomPathname } from '@components/CustomPathname'
 import { EntryDecider } from '@components/Entry/decider'
 import { NoEntries } from '@components/Entry/no-entries'
-import { usePathnameContext } from '@contexts/pathname'
-import { useUrlContext } from '@contexts/url'
 import React from 'react'
 import { Settings, X } from 'react-feather'
 import { Box, Flex, Image } from 'rebass'
 import { PopupWithRouter } from './popup-with-router'
 
 export const Popup: React.FC = () => {
-  const { url } = useUrlContext()
-  const { pathname } = usePathnameContext()
-  const [customPathname, setCustomPathname] = React.useState<string>(
-    url.hostname + pathname
-  )
-
-  React.useEffect(() => {
-    setCustomPathname((url.hostname + pathname).replace(/[\/]/g, ' > '))
-  }, [url.hostname, pathname])
-
   return (
     <BasicCard>
       <Box
@@ -40,7 +29,10 @@ export const Popup: React.FC = () => {
                 cursor: 'pointer',
                 borderRadius: 9999,
                 p: 1,
-                ':hover': { bg: 'rgb(229, 231, 235)' }
+                ':hover': { bg: 'rgb(229, 231, 235)' },
+                transitionProperty: 'all',
+                transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                transitionDuration: '150ms'
               }}
               onClick={() => chrome.runtime.openOptionsPage()}>
               <Settings size={16} strokeWidth={2} color="rgb(156, 163, 175)" />
@@ -52,19 +44,18 @@ export const Popup: React.FC = () => {
                 cursor: 'pointer',
                 borderRadius: 9999,
                 p: '2px',
-                ':hover': { bg: 'rgb(229, 231, 235)' }
+                ':hover': { bg: 'rgb(229, 231, 235)' },
+                transitionProperty: 'all',
+                transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                transitionDuration: '150ms'
               }}
               onClick={() => window.close()}>
               <X size={20} strokeWidth={2} color="rgb(156, 163, 175)" />
             </Flex>
           </Flex>
         </Flex>
-        <BasicCardSubtitle
-          title={customPathname}
-          my={1}
-          display="flex"
-          truncate>
-          {customPathname}
+        <BasicCardSubtitle my={1} display="flex" truncate>
+          <CustomPathname />
         </BasicCardSubtitle>
       </Box>
       <PopupWithRouter

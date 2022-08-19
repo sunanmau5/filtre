@@ -15,12 +15,13 @@ interface EntryProps {
 
 export const Entry: React.FC<EntryProps> = (props) => {
   const { entry } = props
-  const { config } = useConfigContext()
-  const { excludedParameters } = config
+  const {
+    config: { excludedParameters }
+  } = useConfigContext()
 
   const renderSubpaths = (paths: IPaths) => {
     if (paths.length === 0) {
-      return <NoEntries text="You currently have no subpaths available." />
+      return <NoEntries text="No subpaths available." />
     } else {
       return paths.map((path, i) => {
         const { name } = path
@@ -34,7 +35,7 @@ export const Entry: React.FC<EntryProps> = (props) => {
     )
     if (localEntries.length === 0) {
       return (
-        <NoEntries text="You currently have no query parameters available for this pathname." />
+        <NoEntries text="No query parameters available for this path name." />
       )
     } else {
       return localEntries

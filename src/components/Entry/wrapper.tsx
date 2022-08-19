@@ -20,7 +20,10 @@ export const EntryWrapper: React.FC<Props> = (props) => {
         cursor: 'pointer',
         bg: index % 2 ? 'white' : 'rgb(243, 244, 246)',
         ':hover': { bg: 'rgb(219, 234, 254)' },
-        ':active': { bg: 'rgb(191, 219, 254)' }
+        ':active': { bg: 'rgb(191, 219, 254)' },
+        transitionProperty: 'all',
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        transitionDuration: '150ms'
       }}>
       {children}
     </Flex>

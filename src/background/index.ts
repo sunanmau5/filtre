@@ -1,3 +1,4 @@
+import { DEFAULT_TOP_FILTERS_COUNT } from '../constants'
 import { IEntry, IParameters, IPath } from '../types'
 import {
   getStoredFilters,
@@ -12,7 +13,10 @@ chrome.runtime.onInstalled.addListener(() => {
   //
   //
   setStoredFilters({})
-  setStoredConfig({ excludedParameters: [] })
+  setStoredConfig({
+    excludedParameters: [],
+    topFiltersCount: DEFAULT_TOP_FILTERS_COUNT
+  })
 })
 
 export const upsertParams = (
@@ -59,7 +63,7 @@ export const upsertParams = (
 
 export const recursiveFunc = (
   filters: IPath[],
-  paths: Array<string>,
+  paths: string[],
   parameters: URLSearchParams
 ) => {
   //

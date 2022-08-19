@@ -37,6 +37,9 @@ export const EntryNode: React.FC<Props> = (props) => {
         bg: 'white',
         ':hover': { bg: 'rgb(219, 234, 254)' },
         ':active': { bg: 'rgb(191, 219, 254)' },
+        transitionProperty: 'all',
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        transitionDuration: '150ms',
         borderRadius: 10
       }}>
       <Text fontSize={14}>{decodeURIComponent(nodeKey)}</Text>

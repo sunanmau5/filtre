@@ -21,3 +21,12 @@ export type IPaths = IPath[]
 export type IEntry = {
   [host: string]: IPaths
 }
+
+export type GeneralState = 'loading' | 'ready' | 'error'
+
+export type ITopFilter = Pick<
+  IParameter,
+  'count' | 'uuid' | 'paramKey' | 'paramValue'
+> & { path: string }
+
+export type ITopFilters = ITopFilter[]

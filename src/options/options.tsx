@@ -9,22 +9,34 @@ import { Label } from '@rebass/forms'
 import React from 'react'
 import { Plus, Save, Trash2, X } from 'react-feather'
 import { Flex, Image, Text } from 'rebass'
+import {
+  DEFAULT_TOP_FILTERS_COUNT,
+  MAX_TOP_FILTERS_COUNT,
+  MIN_TOP_FILTERS_COUNT
+} from '../constants'
 import { clearFilters, setStoredConfig } from '../utils/storage'
 
 export const Options: React.FC = () => {
-  const { config, setConfig } = useConfigContext()
+  const { loading, config, setConfig } = useConfigContext()
 
   const [excludedKeys, setExcludedKeys] = React.useState<string[]>(
     config.excludedParameters
+  )
+  const [filtersCount, setFiltersCount] = React.useState<string>(
+    config.topFiltersCount.toString()
   )
   const [localKey, setLocalKey] = React.useState<string>('')
 
   const saveChanges = (e: React.BaseSyntheticEvent) => {
     e.preventDefault()
-    if (config.excludedParameters !== excludedKeys) {
-      setConfig({ excludedParameters: excludedKeys })
-      setStoredConfig({ excludedParameters: excludedKeys })
+    const newConfig = {
+      excludedParameters: excludedKeys,
+      topFiltersCount: filtersCount
+        ? Math.round(Number(filtersCount))
+        : DEFAULT_TOP_FILTERS_COUNT
     }
+    setConfig(newConfig)
+    setStoredConfig(newConfig)
   }
 
   const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -45,10 +57,15 @@ export const Options: React.FC = () => {
   }
 
   React.useEffect(() => {
-    if (config.excludedParameters) {
-      setExcludedKeys(config.excludedParameters)
+    if (!loading) {
+      if (config.excludedParameters) {
+        setExcludedKeys(config.excludedParameters)
+      }
+      if (config.topFiltersCount) {
+        setFiltersCount(config.topFiltersCount.toString())
+      }
     }
-  }, [config.excludedParameters])
+  }, [loading, config])
 
   return (
     <Flex sx={{ justifyContent: 'center' }}>
@@ -76,6 +93,35 @@ export const Options: React.FC = () => {
                 justifyContent: 'center',
                 gap: 2
               }}>
+              <Flex
+                sx={{
+                  flexDirection: ['column', 'row'],
+                  alignItems: 'center',
+                  gap: 2
+                }}>
+                <Label
+                  width={[1, 1 / 2]}
+                  sx={{ fontSize: 14 }}
+                  htmlFor="topFilters">
+                  Max. Number of Top Filters
+                </Label>
+                <InputField
+                  id="topFilters"
+                  name="topFilters"
+                  type="number"
+                  value={filtersCount}
+                  onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => {
+                    const value = Math.max(
+                      MIN_TOP_FILTERS_COUNT,
+                      Math.min(MAX_TOP_FILTERS_COUNT, Number(e.target.value))
+                    )
+                    setFiltersCount(value.toString())
+                  }}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFiltersCount(e.target.value)
+                  }
+                />
+              </Flex>
               <Flex
                 sx={{
                   flexDirection: ['column', 'row'],
@@ -149,7 +195,7 @@ export const Options: React.FC = () => {
                 width={[1, 1 / 2]}
                 onClick={() => {
                   const confirm = prompt(
-                    'Are you sure you want to clear all filters? (type yes)'
+                    'Are you sure you want to delete all filters? (type yes)'
                   )
                   if (confirm === 'yes') {
                     clearFilters()
@@ -157,13 +203,17 @@ export const Options: React.FC = () => {
                   }
                 }}>
                 <Trash2 size={14} color="white" />
-                Clear All Filters
+                Delete All Filters
               </RedButton>
               <PrimaryButton
                 order={[1, 2]}
                 sx={{ gap: 2 }}
                 width={1}
-                disabled={config.excludedParameters === excludedKeys}
+                disabled={
+                  config.excludedParameters === excludedKeys &&
+                  !!filtersCount &&
+                  config.topFiltersCount.toString() === filtersCount
+                }
                 onClick={saveChanges}>
                 <Save size={14} color="white" />
                 Save Changes

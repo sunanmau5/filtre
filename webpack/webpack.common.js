@@ -32,7 +32,8 @@ module.exports = {
     symlinks: false,
     alias: {
       '@components': path.resolve('src', 'components'),
-      '@contexts': path.resolve('src', 'contexts')
+      '@contexts': path.resolve('src', 'contexts'),
+      '@hooks': path.resolve('src', 'hooks')
     }
   },
   plugins: [

@@ -1,11 +1,7 @@
 import React from 'react'
 import { getCurrentTab } from '../utils/tabs'
 
-export type IURL = {
-  origin: string
-  hostname: string
-  pathname: string
-}
+export type IURL = Pick<URL, 'origin' | 'hostname' | 'pathname' | 'search'>
 
 export interface IUrlContext {
   url: IURL
@@ -13,7 +9,7 @@ export interface IUrlContext {
 }
 
 export const UrlContext = React.createContext<IUrlContext>({
-  url: { origin: '', hostname: '', pathname: '' },
+  url: { origin: '', hostname: '', pathname: '', search: '' },
   setUrl: () => {}
 })
 
@@ -29,14 +25,15 @@ export const UrlProvider: React.FC = ({ children }) => {
   const [url, setUrl] = React.useState<IURL>({
     origin: '',
     hostname: '',
-    pathname: ''
+    pathname: '',
+    search: ''
   })
 
   const fetchUrl = () => {
     getCurrentTab().then((result) => {
       if (result.url) {
-        const { origin, hostname, pathname } = new URL(result.url)
-        setUrl({ origin, hostname, pathname })
+        const { origin, hostname, pathname, search } = new URL(result.url)
+        setUrl({ origin, hostname, pathname, search })
       }
     })
   }
