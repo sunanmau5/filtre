@@ -1,5 +1,6 @@
 import { useParameterContext } from '@contexts/parameter'
 import { usePathnameContext } from '@contexts/pathname'
+import { withHover, withPadding, withTransition } from '@hoc/styles'
 import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
@@ -18,6 +19,8 @@ export const EntryNode: React.FC<Props> = (props) => {
   const { setPathname } = usePathnameContext()
   const { setSearchParameters } = useParameterContext()
 
+  const Wrapper = withHover(withTransition(withPadding(Flex)))
+
   const handleClick = () => {
     setPathname((prev) => `${prev}${nodeKey}`)
     setSearchParameters({})
@@ -25,25 +28,18 @@ export const EntryNode: React.FC<Props> = (props) => {
   }
 
   return (
-    <Flex
+    <Wrapper
       onClick={handleClick}
       sx={{
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        px: 3,
-        py: 2,
         cursor: 'pointer',
         bg: 'white',
-        ':hover': { bg: 'rgb(219, 234, 254)' },
-        ':active': { bg: 'rgb(191, 219, 254)' },
-        transitionProperty: 'all',
-        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        transitionDuration: '150ms',
         borderRadius: 10
       }}>
       <Text fontSize={14}>{decodeURIComponent(nodeKey)}</Text>
       <ChevronRight />
-    </Flex>
+    </Wrapper>
   )
 }

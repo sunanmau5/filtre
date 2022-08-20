@@ -3,7 +3,7 @@ import { queryStringToJson, upsertParams } from '../background'
 
 const defaultUUID = '4162d44a-51e2-4de6-9128-a4c6b33090fc'
 const defaultDate = 123456789
-const defaultVersion = '1.0.0'
+const defaultVersion = '0.0.1'
 
 Object.defineProperty(global, 'crypto', {
   value: {
@@ -416,7 +416,7 @@ describe('upserting parameters', () => {
         paramKey: 'parameter',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })
@@ -439,7 +439,7 @@ describe('upserting parameters', () => {
         paramKey: 'parameter',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })
@@ -456,7 +456,7 @@ describe('upserting parameters', () => {
         paramKey: 'first',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -465,7 +465,7 @@ describe('upserting parameters', () => {
         paramKey: 'second',
         paramValue: 'two',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -474,7 +474,7 @@ describe('upserting parameters', () => {
         paramKey: 'third',
         paramValue: 'three',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -483,7 +483,7 @@ describe('upserting parameters', () => {
         paramKey: 'fourth',
         paramValue: 'four',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -492,7 +492,7 @@ describe('upserting parameters', () => {
         paramKey: 'fifth',
         paramValue: 'five',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })
@@ -516,7 +516,7 @@ describe('upserting parameters', () => {
         paramKey: 'first',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count,
@@ -525,7 +525,7 @@ describe('upserting parameters', () => {
         paramKey: 'second',
         paramValue: 'two',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count,
@@ -534,7 +534,7 @@ describe('upserting parameters', () => {
         paramKey: 'third',
         paramValue: 'three',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count,
@@ -543,7 +543,7 @@ describe('upserting parameters', () => {
         paramKey: 'fourth',
         paramValue: 'four',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count,
@@ -552,7 +552,7 @@ describe('upserting parameters', () => {
         paramKey: 'fifth',
         paramValue: 'five',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })
@@ -569,7 +569,7 @@ describe('upserting parameters', () => {
         paramKey: 'first',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -578,7 +578,7 @@ describe('upserting parameters', () => {
         paramKey: 'second',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -587,7 +587,7 @@ describe('upserting parameters', () => {
         paramKey: 'third',
         paramValue: 'one',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })
@@ -605,7 +605,7 @@ describe('upserting parameters', () => {
         paramKey: 'parameter',
         paramValue: 'one,three',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -614,7 +614,7 @@ describe('upserting parameters', () => {
         paramKey: 'another_parameter',
         paramValue: 'two,four',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })
@@ -631,7 +631,7 @@ describe('upserting parameters', () => {
         paramKey: 'parameter',
         paramValue: '',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       },
       {
         count: 1,
@@ -640,7 +640,7 @@ describe('upserting parameters', () => {
         paramKey: 'another_parameter',
         paramValue: '',
         uuid: '4162d44a-51e2-4de6-9128-a4c6b33090fc',
-        version: '1.0.0'
+        version: '0.0.1'
       }
     ])
   })

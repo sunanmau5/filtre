@@ -1,5 +1,6 @@
 import { useParameterContext } from '@contexts/parameter'
 import { usePathnameContext } from '@contexts/pathname'
+import { withTransition } from '@hoc/styles'
 import React from 'react'
 import { goBack } from 'react-chrome-extension-router'
 import { ChevronLeft } from 'react-feather'
@@ -9,6 +10,8 @@ export const BackButton: React.FC = () => {
   const { pathname, setPathname } = usePathnameContext()
   const { setSearchParameters } = useParameterContext()
 
+  const Wrapper = withTransition(Flex)
+
   const handleClick = () => {
     setPathname((prev) => prev.substring(0, prev.lastIndexOf('/')))
     setSearchParameters({})
@@ -16,7 +19,7 @@ export const BackButton: React.FC = () => {
   }
 
   return pathname ? (
-    <Flex
+    <Wrapper
       p={1}
       onClick={handleClick}
       sx={{
@@ -24,12 +27,9 @@ export const BackButton: React.FC = () => {
         justifyContent: 'center',
         cursor: 'pointer',
         ':hover': { bg: 'rgb(229, 231, 235)' },
-        transitionProperty: 'all',
-        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        transitionDuration: '150ms',
         borderRadius: 5
       }}>
       <ChevronLeft size={16} />
-    </Flex>
+    </Wrapper>
   ) : null
 }

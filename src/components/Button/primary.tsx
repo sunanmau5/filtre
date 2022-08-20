@@ -1,10 +1,13 @@
+import { withTransition } from '@hoc/styles'
 import React from 'react'
 import { Button, ButtonProps } from 'rebass'
 
 export const PrimaryButton: React.FC<ButtonProps> = (props) => {
   const { children, sx, ...buttonProps } = props
+  const ButtonWithTransition = withTransition(Button)
+
   return (
-    <Button
+    <ButtonWithTransition
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -17,13 +20,10 @@ export const PrimaryButton: React.FC<ButtonProps> = (props) => {
         ':hover': { bg: 'rgb(59, 130, 246)' },
         ':active': { bg: 'rgb(37, 99, 235)' },
         ':disabled': { bg: 'rgb(191, 219, 254)', cursor: 'not-allowed' },
-        transitionProperty: 'all',
-        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        transitionDuration: '150ms',
         ...sx
       }}
       {...buttonProps}>
       {children}
-    </Button>
+    </ButtonWithTransition>
   )
 }

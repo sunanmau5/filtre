@@ -4,7 +4,7 @@ import { TopFilters } from '@components/TopFilters'
 import React from 'react'
 import { Flex } from 'rebass'
 import { IPaths } from '../../types'
-import { EntryNode } from './node'
+import { EntryPaths } from './paths'
 
 export interface EntryRootProps {
   paths: IPaths
@@ -17,13 +17,7 @@ export const EntryRoot: React.FC<EntryRootProps> = (props) => {
       <BasicCardHeader fontSize={18}>Top Filters</BasicCardHeader>
       <TopFilters />
       <Divider />
-      <BasicCardHeader fontSize={18}>Paths</BasicCardHeader>
-      <Flex flexDirection="column" sx={{ gap: 2 }}>
-        {paths.map((path, i) => {
-          const { name } = path
-          return <EntryNode index={i} key={name} nodeKey={name} paths={paths} />
-        })}
-      </Flex>
+      <EntryPaths entity="paths" paths={paths} />
     </Flex>
   )
 }

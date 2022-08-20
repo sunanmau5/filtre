@@ -2,22 +2,13 @@ import React from 'react'
 import { GeneralState } from 'src/types'
 
 const useMergeParameters = (
-  currentPathname: string,
   currentParameters: string,
-  path: string,
   paramKey: string,
   paramValue: string
-): { state: GeneralState; mergedParameters: string } => {
+): { state: GeneralState; mergeParameters: () => string } => {
   const [state, setState] = React.useState<GeneralState>('ready')
-  const [mergedParameters, setMergedParameters] = React.useState<string>(
-    `?${paramKey}=${paramValue}`
-  )
 
-  if (currentPathname !== path) {
-    return { state, mergedParameters }
-  }
-
-  const mergeSearch = () => {
+  const mergeParameters = (): string => {
     setState('loading')
     try {
       const params = new URLSearchParams(currentParameters)
@@ -28,22 +19,15 @@ const useMergeParameters = (
         mergedParamsArray.push(`${key}=${value}`)
       }
 
-      setMergedParameters(`?${mergedParamsArray.join('&')}`)
       setState('ready')
+      return `?${mergedParamsArray.join('&')}`
     } catch (e: any) {
-      setMergedParameters('')
       setState('error')
+      return ''
     }
   }
 
-  React.useEffect(mergeSearch, [
-    currentPathname,
-    currentParameters,
-    paramKey,
-    paramValue
-  ])
-
-  return { state, mergedParameters }
+  return { state, mergeParameters }
 }
 
 export default useMergeParameters

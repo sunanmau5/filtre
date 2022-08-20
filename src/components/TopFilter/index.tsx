@@ -1,6 +1,7 @@
 import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { Parameter } from '@components/Parameter'
 import { useUrlContext } from '@contexts/url'
+import { withHover, withPadding, withTransition } from '@hoc/styles'
 import useCustomPathname from '@hooks/use-custom-pathname'
 import useMergeParameters from '@hooks/use-merge-parameters'
 import React from 'react'
@@ -20,38 +21,33 @@ export const TopFilter: React.FC<Props> = (props) => {
   const { origin, hostname, pathname, search } = url
 
   const { customPathname } = useCustomPathname(hostname, path)
-  const { state, mergedParameters } = useMergeParameters(
-    pathname,
+  const { state, mergeParameters } = useMergeParameters(
     search,
-    path,
     paramKey,
     paramValue
   )
 
+  const Wrapper = withHover(withTransition(withPadding(Flex)))
+
   const handleClick = () => {
-    const newUrl = `${origin}${path}${mergedParameters}`
+    const parameters =
+      path !== pathname ? `?${paramKey}=${paramValue}` : mergeParameters()
+    const newUrl = `${origin}${path}${parameters}`
     updateCurrentTab(newUrl)
-    setUrl({ ...url, search: mergedParameters })
+    setUrl({ ...url, search: parameters })
   }
 
   if (state === 'loading') return null
-  if (state === 'error') throw Error('Error loading top filter')
+  if (state === 'error') throw Error('Error merging parameters')
 
   return (
-    <Flex
+    <Wrapper
       key={uuid}
       as="li"
       sx={{
         flexDirection: 'column',
-        px: 3,
-        py: 2,
         cursor: 'pointer',
         bg: 'white',
-        ':hover': { bg: 'rgb(219, 234, 254)' },
-        ':active': { bg: 'rgb(191, 219, 254)' },
-        transitionProperty: 'all',
-        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        transitionDuration: '150ms',
         borderRadius: 10
       }}
       onClick={handleClick}>
@@ -59,6 +55,6 @@ export const TopFilter: React.FC<Props> = (props) => {
         {customPathname}
       </BasicCardSubtitle>
       <Parameter paramKey={paramKey} paramValue={paramValue} />
-    </Flex>
+    </Wrapper>
   )
 }

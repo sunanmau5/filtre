@@ -1,3 +1,4 @@
+import { withPadding } from '@hoc/styles'
 import React, { isValidElement } from 'react'
 import { Card, CardProps } from 'rebass'
 import { BasicCardTitle } from './title'
@@ -9,10 +10,10 @@ type Props = CardProps & {
 
 export const BasicCard: React.FC<Props> = (props) => {
   const { title, children, sx, ...cardProps } = props
+  const PaddedCard = withPadding(Card)
+
   return (
-    <Card
-      px={3}
-      py={2}
+    <PaddedCard
       sx={{
         width: 450,
         ...sx
@@ -20,6 +21,6 @@ export const BasicCard: React.FC<Props> = (props) => {
       {...cardProps}>
       {isValidElement(title) ? title : <BasicCardTitle>{title}</BasicCardTitle>}
       {children}
-    </Card>
+    </PaddedCard>
   )
 }

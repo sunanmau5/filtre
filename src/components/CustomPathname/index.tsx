@@ -9,24 +9,11 @@ export const CustomPathname: React.FC = () => {
     url: { hostname }
   } = useUrlContext()
   const { pathname } = usePathnameContext()
-  const { state: customPathnameState, customPathname } = useCustomPathname(
-    hostname,
-    pathname
-  )
+  const { state, customPathname } = useCustomPathname(hostname, pathname)
 
-  switch (customPathnameState) {
-    // TODO: show skeleton when loading
-    case 'loading': {
-      return null
-    }
-    case 'error': {
-      throw Error('Error loading custom pathname')
-    }
-    case 'ready': {
-      return <Text title={customPathname}>{customPathname}</Text>
-    }
-    default: {
-      throw Error('State not implemented')
-    }
-  }
+  // TODO: show skeleton when loading
+  if (state === 'loading') return null
+  if (state === 'error') throw Error('Error loading custom pathname')
+
+  return <Text title={customPathname}>{customPathname}</Text>
 }

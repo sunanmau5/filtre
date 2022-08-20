@@ -33,6 +33,7 @@ module.exports = {
     alias: {
       '@components': path.resolve('src', 'components'),
       '@contexts': path.resolve('src', 'contexts'),
+      '@hoc': path.resolve('src', 'hoc'),
       '@hooks': path.resolve('src', 'hooks')
     }
   },

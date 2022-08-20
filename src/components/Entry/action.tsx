@@ -8,10 +8,12 @@ import { usePathnameContext } from '../../contexts/pathname'
 import { useUrlContext } from '../../contexts/url'
 
 export const EntryAction: React.FC = () => {
-  const [localParams, setLocalParams] = useState<string>('')
-  const { url } = useUrlContext()
+  const {
+    url: { origin, hostname }
+  } = useUrlContext()
   const { searchParameters } = useParameterContext()
   const { pathname } = usePathnameContext()
+  const [localParams, setLocalParams] = useState<string>('')
 
   useEffect(() => {
     if (!isEmpty(searchParameters)) {
@@ -33,11 +35,11 @@ export const EntryAction: React.FC = () => {
   return (
     <Flex p={3} sx={{ gap: 3 }}>
       <InputField
-        value={url.hostname + pathname + localParams}
-        title={url.hostname + pathname + localParams}
+        value={hostname + pathname + localParams}
+        title={hostname + pathname + localParams}
         disabled
       />
-      <NavigateButton url={url.origin + pathname + localParams} />
+      <NavigateButton url={origin + pathname + localParams} />
     </Flex>
   )
 }

@@ -7,7 +7,7 @@ import {
 } from '../utils/storage'
 import { groupParamsByKey } from '../utils/url'
 
-const STORE_FORMAT_VERSION = chrome.runtime.getManifest()?.version ?? '1.0.0'
+const STORE_FORMAT_VERSION = chrome.runtime.getManifest()?.version ?? '0.0.1'
 
 chrome.runtime.onInstalled.addListener(() => {
   //
@@ -61,7 +61,7 @@ export const upsertParams = (
   return localParams
 }
 
-export const recursiveFunc = (
+export const recursiveUpsertFunc = (
   filters: IPath[],
   paths: string[],
   parameters: URLSearchParams
@@ -81,7 +81,7 @@ export const recursiveFunc = (
     if (paths.length > 0) {
       //
       //
-      recursiveFunc(filters[pathIndex].subpaths, paths, parameters)
+      recursiveUpsertFunc(filters[pathIndex].subpaths, paths, parameters)
     } else {
       //
       //
@@ -102,7 +102,7 @@ export const recursiveFunc = (
         parameters: [],
         subpaths: []
       })
-      recursiveFunc(filters[newLength - 1].subpaths, paths, parameters)
+      recursiveUpsertFunc(filters[newLength - 1].subpaths, paths, parameters)
     } else {
       //
       //
@@ -133,7 +133,7 @@ export const queryStringToJson = (filters: IEntry, url: string) => {
     filters[hostname] = []
   }
 
-  recursiveFunc(filters[hostname], subdir, searchParams)
+  recursiveUpsertFunc(filters[hostname], subdir, searchParams)
   return filters[hostname]
 }
 
