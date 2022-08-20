@@ -3,14 +3,6 @@ import React from 'react'
 import { GeneralState, IPaths, ITopFilters } from '../types'
 import { getStoredFilters } from '../utils/storage'
 
-// Steps:
-// 1. Initialize an array, maximum length is topFiltersCount
-// 2. Iterate through all root paths
-// 3. Iterate through parameters array for each path
-// 4. Compare count values between each parameter
-// 5. Iterate through subpaths array
-// 6. Repeat steps 3-5 until end of array
-
 const useTopFilters = (
   hostname: string
 ): {
@@ -55,7 +47,7 @@ const useTopFilters = (
           paramValue
         })
 
-        // Always sort the parameter count in an ascending
+        // Always sort the parameter count in a descending
         // order
         topFilters.sort((a, b) => b.count - a.count)
 

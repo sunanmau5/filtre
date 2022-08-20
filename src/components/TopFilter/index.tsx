@@ -21,7 +21,7 @@ export const TopFilter: React.FC<Props> = (props) => {
   const { url, setUrl } = useUrlContext()
   const { origin, hostname, pathname, search } = url
 
-  const { customPathname } = useCustomPathname(hostname, path)
+  const customPathname = useCustomPathname(hostname, path)
   const { state, mergeParameters } = useMergeParameters(
     search,
     paramKey,
