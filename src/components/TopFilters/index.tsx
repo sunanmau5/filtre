@@ -1,6 +1,7 @@
 import { NoEntries } from '@components/Entry/no-entries'
 import { TopFilter } from '@components/TopFilter'
 import { useUrlContext } from '@contexts/url'
+import { withLoadingIndicator } from '@hoc/indicator'
 import useTopFilters from '@hooks/use-top-filters'
 import React from 'react'
 import { Flex } from 'rebass'
@@ -10,12 +11,11 @@ export const TopFilters: React.FC = () => {
     url: { hostname }
   } = useUrlContext()
   const { state, topFilters } = useTopFilters(hostname)
-
-  if (state === 'loading') return null
-  if (state === 'error') throw Error('Error loading top filters')
+  const WrapperWithLoader = withLoadingIndicator(Flex)
 
   return topFilters && topFilters.length > 0 ? (
-    <Flex
+    <WrapperWithLoader
+      isLoading={state === 'loading'}
       as="ul"
       sx={{
         flexDirection: 'column',
@@ -25,7 +25,7 @@ export const TopFilters: React.FC = () => {
       {topFilters.map((topFilter) => (
         <TopFilter topFilter={topFilter} />
       ))}
-    </Flex>
+    </WrapperWithLoader>
   ) : (
     <NoEntries text={'No top filters available for this host name.'} />
   )

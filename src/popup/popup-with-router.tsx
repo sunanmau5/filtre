@@ -1,31 +1,26 @@
-import { useUrlContext } from '@contexts/url'
+import { BodyLoader } from '@components/Loader/body'
+import { withLoadingIndicator } from '@hoc/indicator'
+import useStoredFilters from '@hooks/use-stored-filters'
 import React from 'react'
 import { Router } from 'react-chrome-extension-router'
 import { IPaths } from '../types'
-import { getStoredFilters } from '../utils/storage'
 
 interface Props {
-  errorView: () => React.ReactElement
+  emptyView: () => React.ReactElement
   children(data: IPaths): React.ReactElement
 }
 
 export const PopupWithRouter: React.FC<Props> = (props) => {
-  const { errorView, children } = props
-  const { url } = useUrlContext()
-  const { hostname, pathname } = url
-  const [entries, setEntries] = React.useState<IPaths | null>(null)
+  const { emptyView, children } = props
+  const { state, entries } = useStoredFilters()
 
-  const fetchParams = () => {
-    getStoredFilters().then((filters) => {
-      if (filters[hostname]) {
-        setEntries(filters[hostname])
-      } else {
-        setEntries(null)
-      }
-    })
-  }
+  const RouterWithLoader = withLoadingIndicator(Router)
 
-  React.useEffect(fetchParams, [hostname, pathname])
-
-  return entries ? <Router>{children(entries)}</Router> : errorView()
+  return entries ? (
+    <RouterWithLoader isLoading={state === 'loading'} loader={<BodyLoader />}>
+      {children(entries)}
+    </RouterWithLoader>
+  ) : (
+    emptyView()
+  )
 }

@@ -1,6 +1,7 @@
 import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { Parameter } from '@components/Parameter'
 import { useUrlContext } from '@contexts/url'
+import { withLoadingIndicator } from '@hoc/indicator'
 import { withHover, withPadding, withTransition } from '@hoc/styles'
 import useCustomPathname from '@hooks/use-custom-pathname'
 import useMergeParameters from '@hooks/use-merge-parameters'
@@ -27,7 +28,9 @@ export const TopFilter: React.FC<Props> = (props) => {
     paramValue
   )
 
-  const Wrapper = withHover(withTransition(withPadding(Flex)))
+  const WrapperWithLoader = withLoadingIndicator(
+    withHover(withTransition(withPadding(Flex)))
+  )
 
   const handleClick = () => {
     const parameters =
@@ -37,11 +40,9 @@ export const TopFilter: React.FC<Props> = (props) => {
     setUrl({ ...url, search: parameters })
   }
 
-  if (state === 'loading') return null
-  if (state === 'error') throw Error('Error merging parameters')
-
   return (
-    <Wrapper
+    <WrapperWithLoader
+      isLoading={state === 'loading'}
       key={uuid}
       as="li"
       sx={{
@@ -55,6 +56,6 @@ export const TopFilter: React.FC<Props> = (props) => {
         {customPathname}
       </BasicCardSubtitle>
       <Parameter paramKey={paramKey} paramValue={paramValue} />
-    </Wrapper>
+    </WrapperWithLoader>
   )
 }
