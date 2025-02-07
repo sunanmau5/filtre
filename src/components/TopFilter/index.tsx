@@ -1,3 +1,6 @@
+import React from 'react'
+import { Flex } from 'rebass'
+
 import { BasicCardSubtitle } from '@components/BasicCard/subtitle'
 import { Parameter } from '@components/Parameter'
 import { useUrlContext } from '@contexts/url'
@@ -5,8 +8,7 @@ import { withLoadingIndicator } from '@hoc/indicator'
 import { withHover, withPadding, withTransition } from '@hoc/styles'
 import useCustomPathname from '@hooks/use-custom-pathname'
 import useMergeParameters from '@hooks/use-merge-parameters'
-import React from 'react'
-import { Flex } from 'rebass'
+
 import { ITopFilter } from '../../types'
 import { updateCurrentTab } from '../../utils/tabs'
 
@@ -26,10 +28,6 @@ export const TopFilter: React.FC<Props> = (props) => {
     search,
     paramKey,
     paramValue
-  )
-
-  const WrapperWithLoader = withLoadingIndicator(
-    withHover(withTransition(withPadding(Flex)))
   )
 
   const handleClick = () => {
@@ -59,3 +57,7 @@ export const TopFilter: React.FC<Props> = (props) => {
     </WrapperWithLoader>
   )
 }
+
+const WrapperWithLoader = React.memo(
+  withLoadingIndicator(withHover(withTransition(withPadding(Flex))))
+)

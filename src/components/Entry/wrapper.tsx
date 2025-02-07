@@ -1,6 +1,7 @@
-import { withHover, withPadding, withTransition } from '@hoc/styles'
 import React from 'react'
 import { Flex } from 'rebass'
+
+import { withHover, withPadding, withTransition } from '@hoc/styles'
 
 interface Props {
   index: number
@@ -9,8 +10,6 @@ interface Props {
 
 export const EntryWrapper: React.FC<Props> = (props) => {
   const { onClick, index, children } = props
-
-  const Wrapper = withHover(withTransition(withPadding(Flex)))
 
   return (
     <Wrapper
@@ -26,3 +25,5 @@ export const EntryWrapper: React.FC<Props> = (props) => {
     </Wrapper>
   )
 }
+
+const Wrapper = React.memo(withHover(withTransition(withPadding(Flex))))

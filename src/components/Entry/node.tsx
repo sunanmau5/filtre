@@ -1,11 +1,14 @@
-import { useParameterContext } from '@contexts/parameter'
-import { usePathnameContext } from '@contexts/pathname'
-import { withHover, withPadding, withTransition } from '@hoc/styles'
 import React from 'react'
 import { goTo } from 'react-chrome-extension-router'
 import { ChevronRight } from 'react-feather'
 import { Flex, Text } from 'rebass'
+
+import { useParameterContext } from '@contexts/parameter'
+import { usePathnameContext } from '@contexts/pathname'
+import { withHover, withPadding, withTransition } from '@hoc/styles'
+
 import { IPaths } from '../../types'
+
 import { EntryDecider } from './decider'
 
 interface Props {
@@ -18,8 +21,6 @@ export const EntryNode: React.FC<Props> = (props) => {
   const { index, nodeKey, paths } = props
   const { setPathname } = usePathnameContext()
   const { setSearchParameters } = useParameterContext()
-
-  const Wrapper = withHover(withTransition(withPadding(Flex)))
 
   const handleClick = () => {
     setPathname((prev) => `${prev}${nodeKey}`)
@@ -43,3 +44,5 @@ export const EntryNode: React.FC<Props> = (props) => {
     </Wrapper>
   )
 }
+
+const Wrapper = React.memo(withHover(withTransition(withPadding(Flex))))

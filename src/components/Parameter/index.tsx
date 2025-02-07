@@ -1,16 +1,18 @@
-import { withTruncate } from '@hoc/styles'
 import React from 'react'
 import { Flex, Heading, Text } from 'rebass'
+
+import { withTruncate } from '@hoc/styles'
 
 interface Props {
   paramKey: string
   paramValue: string
 }
 
+const TruncatedText = React.memo(withTruncate(Text))
+
 export const Parameter: React.FC<Props> = (props) => {
   const { paramKey, paramValue } = props
   const decodedValue = decodeURIComponent(paramValue)
-  const TruncatedText = withTruncate(Text)
 
   return (
     <Flex flexDirection="column" maxWidth={250}>

@@ -1,13 +1,12 @@
-import { withPadding } from '@hoc/styles'
 import React from 'react'
 import { Text, TextProps } from 'rebass'
 
-export const BasicCardHeader: React.FC<TextProps> = (props) => {
-  const { sx, children, ...textProps } = props
-  const PaddedText = withPadding(Text)
+import { withPadding } from '@hoc/styles'
 
+const _BasicCardHeader: React.FC<TextProps> = (props) => {
+  const { sx, children, ...textProps } = props
   return (
-    <PaddedText
+    <Text
       fontSize={16}
       sx={{
         my: 0,
@@ -16,6 +15,8 @@ export const BasicCardHeader: React.FC<TextProps> = (props) => {
       }}
       {...textProps}>
       {children}
-    </PaddedText>
+    </Text>
   )
 }
+
+export const BasicCardHeader = React.memo(withPadding(_BasicCardHeader))

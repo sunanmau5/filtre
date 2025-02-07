@@ -1,13 +1,12 @@
-import { withTransition } from '@hoc/styles'
 import React from 'react'
 import { Button, ButtonProps } from 'rebass'
 
-export const PrimaryButton: React.FC<ButtonProps> = (props) => {
-  const { children, sx, ...buttonProps } = props
-  const ButtonWithTransition = withTransition(Button)
+import { withTransition } from '@hoc/styles'
 
+const _PrimaryButton: React.FC<ButtonProps> = (props) => {
+  const { children, sx, ...buttonProps } = props
   return (
-    <ButtonWithTransition
+    <Button
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -24,6 +23,8 @@ export const PrimaryButton: React.FC<ButtonProps> = (props) => {
       }}
       {...buttonProps}>
       {children}
-    </ButtonWithTransition>
+    </Button>
   )
 }
+
+export const PrimaryButton = React.memo(withTransition(_PrimaryButton))

@@ -10,9 +10,7 @@ import { Settings, X } from 'react-feather'
 import { Box, Flex, Image } from 'rebass'
 import { PopupWithRouter } from './popup-with-router'
 
-export const Popup: React.FC = () => {
-  const FlexWithTransition = withTransition(Flex)
-
+export function Popup() {
   return (
     <BasicCard>
       <Box
@@ -66,3 +64,5 @@ export const Popup: React.FC = () => {
     </BasicCard>
   )
 }
+
+const FlexWithTransition = React.memo(withTransition(Flex))

@@ -10,8 +10,6 @@ export const BackButton: React.FC = () => {
   const { pathname, setPathname } = usePathnameContext()
   const { setSearchParameters } = useParameterContext()
 
-  const Wrapper = withTransition(Flex)
-
   const handleClick = () => {
     setPathname((prev) => prev.substring(0, prev.lastIndexOf('/')))
     setSearchParameters({})
@@ -33,3 +31,5 @@ export const BackButton: React.FC = () => {
     </Wrapper>
   ) : null
 }
+
+const Wrapper = React.memo(withTransition(Flex))
