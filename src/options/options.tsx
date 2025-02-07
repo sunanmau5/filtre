@@ -16,6 +16,41 @@ import {
 } from '../constants'
 import { clearFilters, setStoredConfig } from '../utils/storage'
 
+const ExcludeInput: React.FC<{
+  onAdd: (key: string) => void
+}> = ({ onAdd }) => {
+  const [localKey, setLocalKey] = React.useState('')
+
+  const handleAdd = () => {
+    if (localKey) {
+      onAdd(localKey)
+      setLocalKey('')
+    }
+  }
+
+  return (
+    <Flex width={1} sx={{ gap: 2 }}>
+      <InputField
+        id="exclude"
+        name="exclude"
+        value={localKey}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+          if (e.code === 'Enter') handleAdd()
+        }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setLocalKey(e.target.value)
+        }
+      />
+      <PrimaryButton
+        sx={{ minWidth: 40 }}
+        onClick={handleAdd}
+        disabled={!localKey}>
+        <Plus size={20} color="white" />
+      </PrimaryButton>
+    </Flex>
+  )
+}
+
 export const Options: React.FC = () => {
   const { loading, config, setConfig } = useConfigContext()
 
@@ -25,7 +60,6 @@ export const Options: React.FC = () => {
   const [filtersCount, setFiltersCount] = React.useState<string>(
     config.topFiltersCount.toString()
   )
-  const [localKey, setLocalKey] = React.useState<string>('')
 
   const saveChanges = (e: React.BaseSyntheticEvent) => {
     e.preventDefault()
@@ -37,19 +71,6 @@ export const Options: React.FC = () => {
     }
     setConfig(newConfig)
     setStoredConfig(newConfig)
-  }
-
-  const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter') {
-      onAddExcludedKey(localKey)
-    }
-  }
-
-  const onAddExcludedKey = (key: string) => {
-    if (localKey) {
-      setExcludedKeys((prev) => [...new Set([...prev, key])])
-      setLocalKey('')
-    }
   }
 
   const onRemoveExcludedKey = (key: string) => {
@@ -134,23 +155,11 @@ export const Options: React.FC = () => {
                   htmlFor="exclude">
                   Exclude Parameters
                 </Label>
-                <Flex width={1} sx={{ gap: 2 }}>
-                  <InputField
-                    id="exclude"
-                    name="exclude"
-                    value={localKey}
-                    onKeyDown={keyDown}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setLocalKey(e.target.value)
-                    }
-                  />
-                  <PrimaryButton
-                    sx={{ minWidth: 40 }}
-                    onClick={() => onAddExcludedKey(localKey)}
-                    disabled={!localKey}>
-                    <Plus size={20} color="white" />
-                  </PrimaryButton>
-                </Flex>
+                <ExcludeInput
+                  onAdd={(key) =>
+                    setExcludedKeys((prev) => [...new Set([...prev, key])])
+                  }
+                />
               </Flex>
               <Flex
                 as="ul"
